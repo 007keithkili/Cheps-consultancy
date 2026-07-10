@@ -1,679 +1,947 @@
-Here is a complete, single-file HTML document that creates a professional homepage for CHEPS Consultancy. It includes a clean, modern design with a navigation menu organized under a simple "Menu" button to avoid a crowded header.
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CHEPS Consultancy · Building Futures Beyond Borders</title>
-  <!-- Font Awesome 6 (free) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>CHEP'S Consultancy – EXPLORE BEYOND</title>
+  <link href="https://i.pinimg.com/1200x/98/a9/c1/98a9c157f35ce774a6a0d742b7b3df2c.jpg" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ----- RESET & BASE ----- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* --- RESET & BASE --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #d4703a;
+      --orange-dark: #b85c28;
+      --orange-light: #e8945a;
+      --bg-light: #f9f5f1;
+      --bg-white: #ffffff;
+      --text-dark: #1a1a1a;
+      --text-mid: #444444;
+      --text-light: #777777;
+      --border: #e5e0da;
+      --nav-bg: #ffffff;
+      --hero-overlay: rgba(0,0,0,0.45);
+      --section-gap: 20px;
+    }
+    body { 
+      font-family: 'Open Sans', sans-serif; 
+      color: var(--text-dark); 
+      background: var(--bg-white); 
+      overflow-x: hidden; 
+      width: 100%; 
+      transition: background 0.2s, color 0.2s;
+    }
+    body.dark-theme {
+      --bg-light: #1e1e2a;
+      --bg-white: #15151e;
+      --text-dark: #f0f0f0;
+      --text-mid: #c0c0c0;
+      --text-light: #a0a0a0;
+      --border: #3a3a4a;
+      --nav-bg: #1a1a24;
+      --hero-overlay: rgba(0,0,0,0.65);
+    }
+    body.dark-theme .service-card,
+    body.dark-theme .partner-card,
+    body.dark-theme .testi-card {
+      background: #1e1e2a;
+      border-color: #3a3a4a;
+    }
+    body.dark-theme .contact-form input,
+    body.dark-theme .contact-form textarea,
+    body.dark-theme .contact-form select {
+      background: #1e1e2a;
+      color: #f0f0f0;
+      border-color: #3a3a4a;
     }
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a1628;
+    /* --- NAV --- */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 62px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon {
+      width: 38px; height: 38px; background: var(--orange);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: #fff; font-weight: 800;
+    }
+    .nav-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 16px; color: var(--text-dark); }
+    
+    /* --- single button for all links --- */
+    .nav-links-btn {
+      background: var(--orange);
       color: #fff;
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* ----- NAVIGATION (clean, with hamburger-style button) ----- */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      background: rgba(10, 22, 40, 0.78);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 14px 0;
-      transition: background 0.3s ease;
-    }
-
-    .navbar .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-
-    .logo {
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #4dabf7, #20c997);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .logo span {
-      font-weight: 300;
-      -webkit-text-fill-color: rgba(255,255,255,0.4);
-      color: rgba(255,255,255,0.4);
-    }
-
-    /* ---- "Menu" button (clean, not crowded) ---- */
-    .menu-toggle {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #fff;
-      padding: 10px 22px;
-      border-radius: 40px;
-      font-weight: 500;
-      font-size: 15px;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 14px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 10px;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(4px);
+      gap: 8px;
+      transition: background 0.2s;
+      font-family: inherit;
     }
-    .menu-toggle:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.25);
-    }
-    .menu-toggle i {
-      font-size: 18px;
-      color: #4dabf7;
-    }
+    .nav-links-btn:hover { background: var(--orange-dark); }
+    .nav-links-btn i { font-size: 16px; }
 
     /* dropdown panel */
     .nav-dropdown {
       position: absolute;
-      top: 78px;
-      right: 24px;
-      background: rgba(15, 30, 55, 0.96);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 20px 28px;
-      min-width: 220px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      top: 62px;
+      right: 40px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 0;
+      min-width: 200px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
       display: none;
       flex-direction: column;
-      gap: 6px;
-      transition: all 0.25s ease;
+      gap: 4px;
+      z-index: 200;
     }
-    .nav-dropdown.open {
-      display: flex;
-    }
-
+    .nav-dropdown.open { display: flex; }
     .nav-dropdown a {
-      color: rgba(255, 255, 255, 0.8);
+      padding: 10px 24px;
       text-decoration: none;
-      padding: 8px 6px;
-      font-size: 15px;
-      font-weight: 500;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .nav-dropdown a i {
-      width: 20px;
-      color: #4dabf7;
+      color: var(--text-mid);
       font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
     }
     .nav-dropdown a:hover {
-      background: rgba(77, 171, 247, 0.08);
-      color: #fff;
-      padding-left: 12px;
+      background: var(--bg-light);
+      color: var(--orange);
     }
-    .nav-dropdown .contact-cta {
-      background: linear-gradient(135deg, #4dabf7, #2b8aed);
-      color: #fff !important;
-      padding: 10px 16px;
-      border-radius: 40px;
-      text-align: center;
-      justify-content: center;
-      margin-top: 8px;
-      font-weight: 600;
-      box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+    body.dark-theme .nav-dropdown {
+      background: #1e1e2a;
+      border-color: #3a3a4a;
     }
-    .nav-dropdown .contact-cta i {
-      color: #fff;
-    }
-    .nav-dropdown .contact-cta:hover {
-      background: linear-gradient(135deg, #5bb8ff, #3a9aed);
-      padding-left: 16px;
+    body.dark-theme .nav-dropdown a:hover {
+      background: #2a2a3a;
     }
 
-    /* ----- HERO SECTION (stunning) ----- */
+    .nav-right { display: flex; align-items: center; gap: 12px; position: relative; }
+    .theme-toggle {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-mid);
+      padding: 6px 10px;
+      border-radius: 30px;
+      transition: background 0.2s;
+    }
+    .theme-toggle:hover { background: rgba(0,0,0,0.05); }
+    .nav-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-dark);
+      padding: 8px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .nav-toggle:hover { background: rgba(0,0,0,0.05); }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links-btn { padding: 6px 16px; font-size: 13px; }
+      .nav-dropdown { right: 20px; min-width: 180px; }
+      .nav-toggle { display: flex; align-items: center; justify-content: center; }
+      .nav-right { gap: 6px; }
+    }
+
+    /* --- HERO with happy client background --- */
     .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 140px 0 80px;
-      overflow: hidden;
-      background: #0a1628;
+      min-height: 480px; display: flex; align-items: center;
+      padding: 70px 60px;
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+      margin-bottom: var(--section-gap);
     }
-
-    /* animated orbs */
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      opacity: 0.35;
+      z-index: 1;
     }
-    .hero-bg .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(110px);
-      opacity: 0.25;
-      animation: floatOrb 14s ease-in-out infinite alternate;
-    }
-    .hero-bg .orb:nth-child(1) {
-      width: 600px;
-      height: 600px;
-      background: #1a4b8c;
-      top: -15%;
-      right: -5%;
-      animation-duration: 16s;
-    }
-    .hero-bg .orb:nth-child(2) {
-      width: 500px;
-      height: 500px;
-      background: #0f7b6e;
-      bottom: -15%;
-      left: -5%;
-      animation-duration: 18s;
-      animation-delay: 1s;
-    }
-    .hero-bg .orb:nth-child(3) {
-      width: 350px;
-      height: 350px;
-      background: #4dabf7;
-      top: 30%;
-      left: 25%;
-      animation-duration: 12s;
-      opacity: 0.15;
-    }
-    @keyframes floatOrb {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(45px, -35px) scale(1.08); }
-    }
-
-    .hero-content {
-      position: relative;
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--hero-overlay);
       z-index: 2;
-      width: 100%;
     }
-
-    .hero-tag {
+    .hero-content { max-width: 560px; position: relative; z-index: 3; }
+    .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 42px; font-weight: 800; color: #fff;
+      line-height: 1.15; margin-bottom: 16px;
+    }
+    .hero-content h1 span { color: var(--orange-light); }
+    .hero-content p { color: rgba(255,255,255,0.8); font-size: 15px; line-height: 1.7; margin-bottom: 30px; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--orange); color: #fff;
+      padding: 13px 28px; border-radius: 30px;
+      font-weight: 700; font-size: 14px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
       display: inline-block;
-      background: rgba(77, 171, 247, 0.12);
-      border: 1px solid rgba(77, 171, 247, 0.2);
-      color: #7bbdf7;
-      padding: 6px 22px;
-      border-radius: 40px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      animation: fadeUp 0.8s ease forwards;
-    }
-
-    .hero h1 {
-      font-size: clamp(42px, 8vw, 76px);
-      font-weight: 800;
-      line-height: 1.05;
-      margin-bottom: 18px;
-      animation: fadeUp 0.8s ease 0.1s forwards;
-      opacity: 0;
-    }
-    .hero h1 .gradient-text {
-      background: linear-gradient(135deg, #4dabf7, #20c997);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero h1 .typewriter-wrap {
-      display: inline-block;
-      position: relative;
-    }
-    .hero h1 .typewriter-wrap::after {
-      content: '|';
-      color: #4dabf7;
-      animation: blink 1s step-end infinite;
-      font-weight: 300;
-      margin-left: 2px;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    .hero-desc {
-      font-size: clamp(17px, 1.4vw, 22px);
-      color: rgba(255, 255, 255, 0.75);
-      max-width: 620px;
-      line-height: 1.7;
-      margin-bottom: 36px;
-      animation: fadeUp 0.8s ease 0.2s forwards;
-      opacity: 0;
-    }
-
-    .hero-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 48px;
-      animation: fadeUp 0.8s ease 0.3s forwards;
-      opacity: 0;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 34px;
-      border-radius: 60px;
-      font-weight: 600;
-      font-size: 16px;
-      transition: all 0.3s ease;
       border: none;
       cursor: pointer;
-      text-decoration: none;
+      font-family: inherit;
     }
-    .btn-primary {
-      background: linear-gradient(135deg, #4dabf7, #2b8aed);
-      color: #fff;
-      box-shadow: 0 8px 28px rgba(0, 123, 255, 0.35);
+    .btn-primary:hover { background: var(--orange-dark); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: #fff;
+      border: 2px solid rgba(255,255,255,0.5);
+      padding: 13px 28px; border-radius: 30px;
+      font-weight: 700; font-size: 14px; text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
     }
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 40px rgba(0, 123, 255, 0.55);
+    .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+    /* --- ABOUT STRIP --- */
+    .about-strip {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; background: var(--bg-white);
+      margin-bottom: var(--section-gap);
     }
-    .btn-primary i {
+    .about-img { position: relative; min-height: 340px; overflow: hidden; }
+    .about-img-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px; height: 100%;
+    }
+    .about-img-grid div { background: #ddd; overflow: hidden; }
+    .about-img-grid div img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .img-placeholder {
+      width: 100%; height: 170px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+    }
+    .ip1 { background: linear-gradient(135deg, #0f3460, #16213e); }
+    .ip2 { background: linear-gradient(135deg, #1a4a7a, #2d6a9f); }
+    .ip3 { background: linear-gradient(135deg, #c0601a, #d4703a); }
+    .ip4 { background: linear-gradient(135deg, #e8945a, #f0a870); }
+
+    .about-text { padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; }
+    .section-eyebrow { color: var(--orange); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+    .about-text h2 { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 16px; line-height: 1.3; }
+    .about-text p { color: var(--text-mid); font-size: 14.5px; line-height: 1.8; margin-bottom: 18px; }
+    .btn-link { color: var(--orange); font-size: 14px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-link:hover { text-decoration: underline; }
+
+    /* --- SERVICES (only 4 cards + link to service page) --- */
+    .offer-section { background: var(--bg-light); padding: 70px 60px; margin-bottom: var(--section-gap); }
+    .section-title { text-align: center; margin-bottom: 50px; }
+    .section-title h2 { font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 800; margin-bottom: 10px; }
+    .section-title p { color: var(--text-light); font-size: 15px; }
+    .title-bar { width: 50px; height: 3px; background: var(--orange); margin: 10px auto 0; border-radius: 2px; }
+
+    .offer-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 900px; margin: 0 auto; }
+    .offer-card { display: grid; grid-template-columns: 230px 1fr; gap: 24px; align-items: start; }
+    .offer-card-img {
+      height: 155px; border-radius: 8px; overflow: hidden;
+      background: #ddd;
+      position: relative;
+    }
+    .offer-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .offer-card-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.06);
+      pointer-events: none;
+      border-radius: 8px;
+    }
+    .offer-card-text h3 { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+    .offer-card-text p { color: var(--text-mid); font-size: 13.5px; line-height: 1.7; }
+    .view-all-wrap { text-align: center; margin-top: 40px; }
+
+    /* --- JOBS ABROAD (only 3 cards) --- */
+    .popular-section { background: var(--bg-white); padding: 70px 60px; margin-bottom: var(--section-gap); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 10px; }
+    .service-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--bg-white); }
+    .service-card-img { height: 170px; position: relative; overflow: hidden; }
+    .service-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .service-card-body { padding: 18px; }
+    .service-card-body h3 { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .service-card-body p { color: var(--text-light); font-size: 13px; line-height: 1.6; margin-bottom: 10px; }
+    .service-meta { display: flex; gap: 16px; font-size: 12px; color: var(--text-light); }
+    .service-meta span { display: flex; align-items: center; gap: 4px; }
+
+    /* --- WHY CHOOSE US --- */
+    .why-section { background: var(--bg-light); padding: 70px 60px; margin-bottom: var(--section-gap); }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+    .why-img-mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .why-img-mosaic .wip { height: 160px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 36px; background: linear-gradient(135deg, var(--orange-light), var(--orange)); overflow: hidden; }
+    .why-img-mosaic .wip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .wip1 { background: linear-gradient(135deg, #0f3460, #16213e); }
+    .wip2 { background: linear-gradient(135deg, #d4703a, #e8945a); }
+    .wip3 { background: linear-gradient(135deg, #1a4a7a, #2d6a9f); }
+    .wip4 { background: linear-gradient(135deg, #c0601a, #0f3460); }
+    .why-features { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 24px; }
+    .why-feature { display: flex; gap: 14px; align-items: flex-start; }
+    .why-icon { width: 42px; height: 42px; min-width: 42px; background: var(--orange); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; }
+    .why-feature-text h4 { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+    .why-feature-text p { color: var(--text-mid); font-size: 13px; line-height: 1.6; }
+
+    /* --- TESTIMONIALS (only 3) --- */
+    .testimonials-section { background: var(--bg-white); padding: 70px 60px; margin-bottom: var(--section-gap); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 10px; }
+    .testi-card { border: 1px solid var(--border); border-radius: 10px; padding: 22px; text-align: center; background: var(--bg-white); }
+    .testi-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-direction: column; }
+    .testi-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; font-size: 15px; overflow: hidden; }
+    .testi-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .testi-name { font-weight: 700; font-size: 14px; margin-top: 8px; }
+    .testi-role { color: var(--text-light); font-size: 12px; }
+    .testi-card p { color: var(--text-mid); font-size: 13px; line-height: 1.7; margin-top: 10px; }
+    .testi-cta { text-align: center; margin-top: 36px; }
+
+    /* --- FAQ --- */
+    .faq-section { background: var(--bg-light); padding: 70px 60px; margin-bottom: var(--section-gap); }
+    .faq-inner { max-width: 720px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 20px 0; }
+    .faq-q { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 10px; display: flex; gap: 12px; }
+    .faq-num { color: var(--orange); }
+    .faq-a { color: var(--text-mid); font-size: 13.5px; line-height: 1.75; padding-left: 26px; }
+
+    /* --- BLOG (only 2) --- */
+    .articles-section { background: var(--bg-white); padding: 70px 60px; margin-bottom: var(--section-gap); }
+    .articles-list { display: flex; flex-direction: column; gap: 24px; margin-top: 10px; max-width: 800px; margin-left: auto; margin-right: auto; }
+    .article-card { display: grid; grid-template-columns: 200px 1fr; gap: 20px; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
+    .article-img { height: 130px; border-radius: 8px; overflow: hidden; }
+    .article-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .article-body h3 { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .article-body p { color: var(--text-mid); font-size: 13.5px; line-height: 1.7; }
+    .article-body a { color: var(--orange); font-weight: 600; font-size: 13px; text-decoration: none; }
+    .article-body a:hover { text-decoration: underline; }
+    .articles-cta { text-align: center; margin-top: 30px; }
+
+    /* --- CTA BAND --- */
+    .cta-band {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 70px 60px; text-align: center; position: relative; overflow: hidden;
+      margin-bottom: var(--section-gap);
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(212,112,58,0.2) 0%, transparent 60%);
+    }
+    .cta-band h2 { font-family: 'Montserrat', sans-serif; font-size: 34px; font-weight: 800; color: #fff; margin-bottom: 14px; position: relative; }
+    .cta-band p { color: rgba(255,255,255,0.72); font-size: 15px; margin-bottom: 30px; position: relative; }
+    .cta-band .btn-primary { position: relative; }
+
+    /* --- CONTACT --- */
+    .contact-section {
+      display: grid; grid-template-columns: 1fr 1fr; background: var(--bg-white);
+      margin-bottom: var(--section-gap);
+    }
+    .contact-left { padding: 70px 60px; }
+    .contact-left h2 { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 14px; }
+    .contact-left p { color: var(--text-mid); font-size: 14.5px; line-height: 1.8; margin-bottom: 28px; }
+    .contact-form { display: flex; flex-direction: column; gap: 14px; }
+    .contact-form input, .contact-form textarea, .contact-form select {
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 12px 14px; font-size: 14px; font-family: 'Open Sans', sans-serif;
+      color: var(--text-dark); background: var(--bg-light); outline: none;
+      transition: border-color 0.2s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { border-color: var(--orange); }
+    .contact-form textarea { min-height: 110px; resize: vertical; }
+    .contact-form button {
+      background: var(--orange); color: #fff; border: none; border-radius: 30px;
+      padding: 13px 28px; font-size: 14px; font-weight: 700; cursor: pointer;
+      transition: background 0.2s; align-self: flex-start;
+    }
+    .contact-form button:hover { background: var(--orange-dark); }
+    .contact-right { background: var(--bg-light); padding: 70px 50px; display: flex; align-items: center; justify-content: center; }
+    .contact-info { display: flex; flex-direction: column; gap: 28px; }
+    .ci-item { display: flex; gap: 16px; align-items: flex-start; }
+    .ci-icon { width: 44px; height: 44px; min-width: 44px; background: var(--orange); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #fff; }
+    .ci-text h4 { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .ci-text p { color: var(--text-mid); font-size: 13.5px; line-height: 1.6; }
+
+    /* --- PARTNERS --- */
+    .partners-section { background: var(--bg-light); padding: 70px 60px; margin-bottom: var(--section-gap); }
+    .partners-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 20px; }
+    .partner-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 30px 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .partner-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+    .partner-card i {
+      font-size: 40px;
+      color: var(--orange);
+      margin-bottom: 12px;
+    }
+    .partner-card h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .partner-card p {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    /* --- GALLERY --- */
+    .gallery-section { background: var(--bg-white); padding: 70px 60px; margin-bottom: var(--section-gap); }
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; }
+    .gallery-item {
+      height: 200px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      background: #ddd;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       transition: transform 0.3s ease;
     }
-    .btn-primary:hover i {
-      transform: translateX(6px);
+    .gallery-item:hover img { transform: scale(1.05); }
+
+    /* --- FOOTER --- */
+    footer {
+      background: #1a1a2e; color: rgba(255,255,255,0.7);
+      padding: 50px 60px 30px;
     }
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1.5px solid rgba(255, 255, 255, 0.18);
-      color: #fff;
-      backdrop-filter: blur(8px);
-    }
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.14);
-      border-color: rgba(255, 255, 255, 0.35);
-      transform: translateY(-3px);
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand h3 { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; line-height: 1.8; margin-bottom: 16px; }
+    .footer-col h4 { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 14px; letter-spacing: 1px; text-transform: uppercase; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--orange-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; }
+    .footer-bottom span { color: rgba(255,255,255,0.5); }
+    .whatsapp-float {
+      position: fixed; bottom: 30px; right: 30px; background: #25D366; width: 56px; height: 56px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 99; text-decoration: none;
     }
 
-    /* country ticker */
-    .country-ticker {
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 60px;
-      padding: 12px 28px;
-      display: inline-flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px 28px;
-      margin-bottom: 40px;
-      animation: fadeUp 0.8s ease 0.4s forwards;
-      opacity: 0;
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .hero { padding: 50px 24px; }
+      .hero-content h1 { font-size: 28px; }
+      .about-strip, .contact-section { grid-template-columns: 1fr; }
+      .offer-grid, .services-grid, .testimonials-grid, .why-grid { grid-template-columns: 1fr; }
+      .offer-card { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .offer-section, .popular-section, .why-section, .testimonials-section, .faq-section, .articles-section, .cta-band, .contact-left, .contact-right, .partners-section, .gallery-section { padding: 50px 24px; }
+      .about-text { padding: 40px 24px; }
+      .why-img-mosaic .wip { height: 140px; }
+      .article-card { grid-template-columns: 1fr; gap: 12px; }
+      .article-img { height: 180px; }
+      .partners-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item { height: 150px; }
+      .nav-dropdown { right: 10px; min-width: 160px; }
     }
-    .country-ticker .label {
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.3px;
-    }
-    .country-ticker .countries {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 22px;
-      color: rgba(255, 255, 255, 0.85);
-      font-weight: 500;
-      font-size: 14px;
-    }
-    .country-ticker .countries span {
-      position: relative;
-      padding-left: 14px;
-    }
-    .country-ticker .countries span::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-      color: #4dabf7;
-    }
-    .country-ticker .countries span:first-child::before {
-      content: '';
-    }
-
-    /* stats */
-    .hero-stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 28px 48px;
-      animation: fadeUp 0.8s ease 0.5s forwards;
-      opacity: 0;
-      padding-top: 4px;
-    }
-    .stat-item {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .stat-number {
-      font-size: 32px;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.5px;
-    }
-    .stat-number .percent {
-      font-size: 26px;
-      font-weight: 600;
-    }
-    .stat-label {
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 15px;
-      font-weight: 400;
-    }
-    .stat-divider {
-      color: rgba(255, 255, 255, 0.1);
-      font-size: 28px;
-      font-weight: 200;
-    }
-
-    @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    /* scroll indicator */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      color: rgba(255, 255, 255, 0.25);
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      animation: fadeUp 1s ease 0.8s forwards;
-      opacity: 0;
-    }
-    .mouse {
-      width: 24px;
-      height: 38px;
-      border: 2px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      display: flex;
-      justify-content: center;
-      padding-top: 6px;
-    }
-    .mouse .wheel {
-      width: 3px;
-      height: 10px;
-      background: rgba(255, 255, 255, 0.25);
-      border-radius: 4px;
-      animation: scrollWheel 2s ease-in-out infinite;
-    }
-    @keyframes scrollWheel {
-      0% { transform: translateY(0); opacity: 0.3; }
-      50% { transform: translateY(8px); opacity: 1; }
-      100% { transform: translateY(0); opacity: 0.3; }
-    }
-
-    /* ----- RESPONSIVE ----- */
-    @media (max-width: 992px) {
-      .hero { padding-top: 160px; }
-      .hero-stats { gap: 16px 28px; }
-      .stat-number { font-size: 26px; }
-    }
-
-    @media (max-width: 600px) {
-      .navbar .container { flex-wrap: nowrap; }
-      .logo { font-size: 20px; }
-      .menu-toggle { padding: 8px 16px; font-size: 14px; }
-      .nav-dropdown { right: 12px; min-width: 190px; padding: 16px 20px; top: 70px; }
-      .hero h1 { font-size: 32px; }
-      .hero-desc { font-size: 15px; }
-      .btn { padding: 12px 22px; font-size: 14px; }
-      .country-ticker { border-radius: 28px; padding: 10px 18px; flex-direction: column; align-items: flex-start; gap: 4px; }
-      .country-ticker .countries span { padding-left: 10px; }
-      .hero-stats { gap: 10px 18px; }
-      .stat-number { font-size: 20px; }
-      .stat-divider { display: none; }
-      .scroll-indicator { display: none; }
-    }
-
-    /* edit hint */
-    .editable-hint {
-      border: 1px dashed rgba(255, 255, 255, 0.07);
-      border-radius: 40px;
-      padding: 4px 16px;
-      background: rgba(255, 255, 255, 0.02);
-      display: inline-block;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.2);
-      margin-top: 28px;
+    @media (max-width: 480px) {
+      .partners-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item { height: 200px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ========== NAVIGATION ========== -->
-<nav class="navbar" id="navbar">
-  <div class="container">
-    <div class="logo">CHEPS <span>Consultancy</span></div>
-    <!-- clean "Menu" button -->
-    <button class="menu-toggle" id="menuToggle">
-      <i class="fas fa-bars"></i> Menu
-    </button>
-    <!-- dropdown -->
+<!-- WhatsApp Float -->
+<a href="https://wa.me/254721473081?text=Hello%20CHEPS%20Consultancy!%20I'm%20interested%20in%20global%20career%20opportunities." class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <div class="nav-logo-icon"><i class="fas fa-globe"></i></div>
+    <span class="nav-logo-text">CHEPS<span style="color:var(--orange);">Consultancy</span></span>
+  </a>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><i class="fas fa-moon"></i></button>
+    <button class="nav-links-btn" id="navLinksBtn"><i class="fas fa-bars"></i> Menu</button>
+    <button class="nav-toggle" id="navToggleBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
     <div class="nav-dropdown" id="navDropdown">
-      <a href="#home"><i class="fas fa-home"></i> Home</a>
-      <a href="#about"><i class="fas fa-info-circle"></i> About</a>
-      <a href="#services"><i class="fas fa-concierge-bell"></i> Services</a>
-      <a href="#jobs"><i class="fas fa-briefcase"></i> Jobs Abroad</a>
-      <a href="#destinations"><i class="fas fa-globe"></i> Destinations</a>
-      <a href="#process"><i class="fas fa-list-ol"></i> Application Process</a>
-      <a href="#stories"><i class="fas fa-star"></i> Success Stories</a>
-      <a href="#resources"><i class="fas fa-book-open"></i> Resources</a>
-      <a href="#gallery"><i class="fas fa-images"></i> Gallery</a>
-      <a href="#partners"><i class="fas fa-handshake"></i> Partners</a>
-      <a href="#contact" class="contact-cta"><i class="fas fa-paper-plane"></i> Contact</a>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#jobs">Jobs</a>
+      <a href="#countries">Countries</a>
+      <a href="#process">Process</a>
+      <a href="#stories">Stories</a>
+      <a href="#blog">Blog</a>
+      <a href="#faq">FAQ</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#partners">Partners</a>
+      <a href="#contact">Contact</a>
     </div>
   </div>
 </nav>
 
-<!-- ========== HERO SECTION ========== -->
+<!-- HERO -->
 <section class="hero" id="home">
-  <!-- animated orbs -->
-  <div class="hero-bg">
-    <div class="orb"></div>
-    <div class="orb"></div>
-    <div class="orb"></div>
-  </div>
-
-  <div class="container hero-content">
-    <div class="hero-tag"><i class="fas fa-globe-americas" style="margin-right: 8px;"></i> Global Mobility Experts</div>
-
-    <h1>
-      <span class="gradient-text">Building Futures</span><br>
-      <span class="typewriter-wrap">Beyond Borders</span>
-    </h1>
-
-    <p class="hero-desc">
-      Your trusted partner for international career opportunities and seamless relocation 
-      services across 12+ countries worldwide.
-    </p>
-
-    <div class="hero-buttons">
-      <a href="#process" class="btn btn-primary">
-        🚀 Start Your Journey <i class="fas fa-arrow-right"></i>
-      </a>
-      <a href="#jobs" class="btn btn-secondary">
-        <i class="fas fa-briefcase"></i> View Open Jobs
-      </a>
+  <div class="hero-content">
+    <h1>Building <span>Futures</span> Beyond Borders</h1>
+    <p>Your trusted partner for international career opportunities, visa processing, and seamless relocation services across 12+ countries worldwide.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary"><i class="fas fa-paper-plane"></i> Start Your Journey</a>
+      <a href="https://wa.me/254721473081" class="btn-outline" target="_blank"><i class="fab fa-whatsapp"></i> Quick Consult</a>
     </div>
-
-    <!-- country ticker -->
-    <div class="country-ticker">
-      <span class="label"><i class="fas fa-map-pin" style="margin-right: 6px;"></i> Live Opportunities:</span>
-      <div class="countries">
-        <span>Netherlands</span><span>Dubai</span><span>New Zealand</span><span>Ireland</span>
-        <span>Qatar</span><span>Serbia</span><span>Slovakia</span><span>Portugal</span>
-        <span>Kuwait</span><span>Saudi Arabia</span>
-      </div>
-    </div>
-
-    <!-- stats -->
-    <div class="hero-stats">
-      <div class="stat-item">
-        <span class="stat-number">98<span class="percent">%</span></span>
-        <span class="stat-label">Visa Success</span>
-      </div>
-      <span class="stat-divider">|</span>
-      <div class="stat-item">
-        <span class="stat-number">1,200<span class="percent">+</span></span>
-        <span class="stat-label">Clients Placed</span>
-      </div>
-      <span class="stat-divider">|</span>
-      <div class="stat-item">
-        <span class="stat-number">12<span class="percent">+</span></span>
-        <span class="stat-label">Countries</span>
-      </div>
-      <span class="stat-divider">|</span>
-      <div class="stat-item">
-        <span class="stat-number">4.9</span>
-        <span class="stat-label" style="display: flex; align-items: center; gap: 2px;">
-          <i class="fas fa-star" style="color: #fcc419; font-size: 14px;"></i> Rating
-        </span>
-      </div>
-    </div>
-
-    <div class="editable-hint"><i class="fas fa-pen-fancy"></i> Fully editable — text, stats, colors</div>
-  </div>
-
-  <!-- scroll indicator -->
-  <div class="scroll-indicator">
-    <span>Scroll to explore</span>
-    <div class="mouse"><div class="wheel"></div></div>
   </div>
 </section>
 
-<!-- ========== SCRIPT ========== -->
+<!-- ABOUT STRIP -->
+<div class="about-strip" id="about">
+  <div class="about-img">
+    <div class="about-img-grid">
+      <div><div class="img-placeholder ip1"><img src="https://i.pinimg.com/1200x/e9/4c/b5/e94cb554b547983079d2c5c89b2506d9.jpg" alt="team"></div></div>
+      <div><div class="img-placeholder ip2"><img src="https://i.pinimg.com/1200x/24/b6/9b/24b69b59d2cd3e5a5361c134c7202947.jpg" alt="career"></div></div>
+      <div><div class="img-placeholder ip3"><img src="https://i.pinimg.com/1200x/8d/e0/9f/8de09fdf3ff6b9d24a4a0113af41d524.jpg" alt="global"></div></div>
+      <div><div class="img-placeholder ip4"><img src="https://i.pinimg.com/1200x/57/ee/68/57ee68aa7f9876864733501b0627be68.jpg" alt="success"></div></div>
+    </div>
+  </div>
+  <div class="about-text">
+    <div class="section-eyebrow">About CHEPS Consultancy</div>
+    <h2>Transforming Lives Through International Career Opportunities</h2>
+    <p><strong>CHEPS Consultancy</strong> is a professional overseas employment and relocation consultancy dedicated to helping individuals secure international job opportunities and successfully transition to life abroad. We provide guidance throughout the entire process, from job sourcing and application support to visa processing and relocation assistance.</p>
+    <p><strong>Our Vision:</strong> To be the leading global mobility and overseas employment consultancy, transforming lives through international career opportunities and successful relocation services.</p>
+    <p><strong>Our Mission:</strong> To connect skilled individuals with reputable international employers while providing expert guidance, reliable support, and seamless relocation solutions that empower clients to build successful futures abroad.</p>
+    <a href="#services" class="btn-link">+ Discover Our Services →</a>
+  </div>
+</div>
+
+<!-- STATS ROW -->
+<div style="background:var(--bg-white); padding: 40px 60px; display:grid; grid-template-columns: repeat(4,1fr); gap:24px; border-bottom:1px solid var(--border); margin-bottom:var(--section-gap);">
+  <div style="display:flex;gap:14px;align-items:flex-start;"><div style="width:42px;height:42px;min-width:42px;background:var(--orange);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;"><i class="fas fa-passport"></i></div><div><h4 style="font-family:Montserrat,sans-serif;font-size:14px;font-weight:700;margin-bottom:5px;">98% Success</h4><p style="color:var(--text-light);font-size:13px;line-height:1.6;">Visa approval rate</p></div></div>
+  <div style="display:flex;gap:14px;align-items:flex-start;"><div style="width:42px;height:42px;min-width:42px;background:var(--orange);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;"><i class="fas fa-users"></i></div><div><h4 style="font-family:Montserrat,sans-serif;font-size:14px;font-weight:700;margin-bottom:5px;">200+</h4><p style="color:var(--text-light);font-size:13px;line-height:1.6;">Clients placed</p></div></div>
+  <div style="display:flex;gap:14px;align-items:flex-start;"><div style="width:42px;height:42px;min-width:42px;background:var(--orange);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;"><i class="fas fa-globe"></i></div><div><h4 style="font-family:Montserrat,sans-serif;font-size:14px;font-weight:700;margin-bottom:5px;">12+</h4><p style="color:var(--text-light);font-size:13px;line-height:1.6;">Countries</p></div></div>
+  <div style="display:flex;gap:14px;align-items:flex-start;"><div style="width:42px;height:42px;min-width:42px;background:var(--orange);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;"><i class="fas fa-star"></i></div><div><h4 style="font-family:Montserrat,sans-serif;font-size:14px;font-weight:700;margin-bottom:5px;">4.9★</h4><p style="color:var(--text-light);font-size:13px;line-height:1.6;">Client rating</p></div></div>
+</div>
+
+<!-- SERVICES SECTION (only 4 cards) -->
+<section class="offer-section" id="services">
+  <div class="section-title">
+    <h2>Our Services</h2>
+    <div class="title-bar"></div>
+    <p>Comprehensive solutions for your international career journey</p>
+  </div>
+  <div class="offer-grid">
+    <div class="offer-card"><div class="offer-card-img"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&h=250&q=80" alt="job placement"></div><div class="offer-card-text"><h3>Overseas Job Placement</h3><p>Access to curated opportunities across 12+ countries in tech, healthcare, finance, engineering, and more.</p></div></div>
+    <div class="offer-card"><div class="offer-card-img"><img src="https://i.pinimg.com/736x/70/f5/44/70f544dd76ac0b8157e49e1e63fb2ab5.jpg" alt="visa"></div><div class="offer-card-text"><h3>Visa Assistance</h3><p>Expert guidance on work visas, residence permits, and immigration pathways with 98% success rate.</p></div></div>
+    <div class="offer-card"><div class="offer-card-img"><img src="https://i.pinimg.com/1200x/6d/2a/98/6d2a983294f8c5e952c09504b1796bbf.jpg" alt="document processing"></div><div class="offer-card-text"><h3>Document Processing</h3><p>Professional document preparation, verification, and submission support for all visa and employment requirements.</p></div></div>
+    <div class="offer-card"><div class="offer-card-img"><img src="https://i.pinimg.com/736x/23/e2/e6/23e2e695e335d6f929b0a172a3395081.jpg" alt="relocation"></div><div class="offer-card-text"><h3>Relocation Support</h3><p>Housing assistance, cultural orientation, and settling-in services for a smooth transition to your new country.</p></div></div>
+  </div>
+  <div class="view-all-wrap">
+    <a href="#contact" class="btn-primary" style="display:inline-block;">View All Services →</a>
+  </div>
+</section>
+
+<!-- JOBS ABROAD (only 3 cards) -->
+<section class="popular-section" id="jobs">
+  <div class="section-title">
+    <h2>Jobs Abroad</h2>
+    <div class="title-bar"></div>
+    <p>Current job openings and career opportunities across the globe</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/736x/ff/6c/60/ff6c607d782e2a45be81f022e3913ec0.jpg" alt="Tech Jobs"></div><div class="service-card-body"><h3>💻 Tech & IT</h3><p>Software engineers, data scientists, IT consultants - positions in Netherlands, Dubai, and Ireland.</p><div class="service-meta"><span>📍 Multiple Countries</span></div></div></div>
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/736x/e1/ad/63/e1ad63235ce8a7d9ac8846d50056eb0e.jpg" alt="Healthcare Jobs"></div><div class="service-card-body"><h3>🏥 Healthcare</h3><p>Nurses, physicians, allied health professionals - opportunities in New Zealand, Qatar, and Portugal.</p><div class="service-meta"><span>📍 Multiple Countries</span></div></div></div>
+    <div class="service-card"><div class="service-card-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&h=250&q=80" alt="Finance Jobs"></div><div class="service-card-body"><h3>💰 Finance & Business</h3><p>Banking, consulting, and management roles in Dubai, Saudi Arabia, and Luxembourg.</p><div class="service-meta"><span>📍 Multiple Countries</span></div></div></div>
+  </div>
+  <div class="view-all-wrap">
+    <a href="#countries" class="btn-primary" style="display:inline-block;">View All Destinations →</a>
+  </div>
+</section>
+
+<!-- COUNTRIES SECTION -->
+<section class="offer-section" id="countries" style="background: var(--bg-white); margin-bottom:var(--section-gap);">
+  <div class="section-title">
+    <h2>Countries We Serve</h2>
+    <div class="title-bar"></div>
+    <p>Employment opportunities available in these countries</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/736x/f3/02/28/f3022808aae657b1d39407c56245d883.jpg" alt="Netherlands"></div><div class="service-card-body"><h3>🇳🇱 Netherlands</h3><p>Tech, Engineering, and Innovation</p></div></div>
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/1200x/ea/db/db/eadbdbafd67efbc98dd61b851278a85f.jpg" alt="Dubai"></div><div class="service-card-body"><h3>🇦🇪 Dubai (UAE)</h3><p>Finance, Business, Tech, and Hospitality</p></div></div>
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/1200x/5b/4b/c1/5b4bc1e0285b4e500c00d2579b67f707.jpg" alt="New Zealand"></div><div class="service-card-body"><h3>🇳🇿 New Zealand</h3><p>Healthcare, IT, and Engineering</p></div></div>
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/736x/25/1e/7b/251e7b94f651dfe2e4c05412b1191c71.jpg" alt="Ireland"></div><div class="service-card-body"><h3>🇮🇪 Ireland</h3><p>Tech, Pharma, and Finance</p></div></div>
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/736x/8b/4a/aa/8b4aaaf2ab62761b5ab99b7bb76d7d77.jpg" alt="Qatar"></div><div class="service-card-body"><h3>🇶🇦 Qatar</h3><p>Construction, Energy, and Healthcare</p></div></div>
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/736x/d9/75/5f/d9755f130d60dcbea97213f8dc439ddd.jpg" alt="Portugal"></div><div class="service-card-body"><h3>🇵🇹 Portugal</h3><p>Tech, Tourism, and Services</p></div></div>
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/1200x/90/2c/f8/902cf801c2021c1a1f91c91723e75927.jpg" alt="Serbia"></div><div class="service-card-body"><h3>🇷🇸 Serbia</h3><p>Engineering and Technology</p></div></div>
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/736x/3a/d9/6b/3ad96bbd84bf4a334e1c78eeaa230704.jpg" alt="Slovakia"></div><div class="service-card-body"><h3>🇸🇰 Slovakia</h3><p>Manufacturing and Engineering</p></div></div>
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/736x/51/cf/06/51cf060e1449f6a0d4db8212bf5a9b8b.jpg" alt="Kuwait"></div><div class="service-card-body"><h3>🇰🇼 Kuwait</h3><p>Construction, Oil & Gas</p></div></div>
+    
+  </div>
+</section>
+
+<!-- APPLICATION PROCESS -->
+<section class="why-section" id="process">
+  <div class="section-title">
+    <h2>Application Process</h2>
+    <div class="title-bar"></div>
+    <p>Your journey to a global career in 7 simple steps</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-img-mosaic">
+      <div class="wip wip1"><img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=400&h=200&q=80" alt="consultation"></div>
+      <div class="wip wip2"><img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=400&h=200&q=80" alt="interview"></div>
+      <div class="wip wip3"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&h=200&q=80" alt="visa"></div>
+      <div class="wip wip4"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&h=200&q=80" alt="relocate"></div>
+    </div>
+    <div>
+      <div class="section-eyebrow">How It Works</div>
+      <h2 style="font-family:Montserrat,sans-serif;font-size:26px;font-weight:800;margin-bottom:20px;line-height:1.3;">From Consultation to Relocation</h2>
+      <div class="why-features">
+        <div class="why-feature"><div class="why-icon">1</div><div class="why-feature-text"><h4>Initial Consultation</h4><p>Discuss your career goals, preferences, and qualifications.</p></div></div>
+        <div class="why-feature"><div class="why-icon">2</div><div class="why-feature-text"><h4>Application Review</h4><p>We review your documents and assess your eligibility.</p></div></div>
+        <div class="why-feature"><div class="why-icon">3</div><div class="why-feature-text"><h4>Employer Matching</h4><p>We match you with suitable international employers.</p></div></div>
+        <div class="why-feature"><div class="why-icon">4</div><div class="why-feature-text"><h4>Interview Preparation</h4><p>Expert coaching and mock interviews for success.</p></div></div>
+        <div class="why-feature"><div class="why-icon">5</div><div class="why-feature-text"><h4>Job Placement</h4><p>Secure your position with a reputable employer.</p></div></div>
+        <div class="why-feature"><div class="why-icon">6</div><div class="why-feature-text"><h4>Visa Processing</h4><p>End-to-end visa application and documentation support.</p></div></div>
+        <div class="why-feature"><div class="why-icon">7</div><div class="why-feature-text"><h4>Relocation Support</h4><p>Housing, cultural orientation, and settling-in assistance.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUCCESS STORIES (only 3) -->
+<section class="testimonials-section" id="stories">
+  <div class="section-title">
+    <h2>Success Stories</h2>
+    <div class="title-bar"></div>
+    <p>Real stories from professionals we've helped</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testi-card"><div class="testi-header"><div class="testi-avatar"><img src="https://i.pinimg.com/736x/c9/49/9e/c9499e78cc0149ac7cfa68deb1b28bde.jpg" alt="Sarah"></div><div class="testi-name">Sarah Mitchell</div><div class="testi-role">Software Engineer, Amsterdam</div></div><p>"CHEPS made my move to Amsterdam seamless. From finding the right role to visa support, they were incredible every step of the way."</p></div>
+    <div class="testi-card"><div class="testi-header"><div class="testi-avatar"><img src="https://i.pinimg.com/1200x/92/89/22/9289225db184864fd115b527070024bb.jpg" alt="Ahmed"></div><div class="testi-name">Dr. Ahmed Rahman</div><div class="testi-role">Healthcare Professional, Dubai</div></div><p>"Moving to Dubai was a big step, but CHEPS made it feel easy. They handled everything professionally and found me the perfect role."</p></div>
+    <div class="testi-card"><div class="testi-header"><div class="testi-avatar"><img src="https://i.pinimg.com/736x/50/45/75/5045750d1b887e0666872ba2c3a990e8.jpg" alt="James"></div><div class="testi-name">James O'Connor</div><div class="testi-role">Project Manager, Auckland</div></div><p>"The career coaching and interview preparation I received was invaluable. I landed a senior role in New Zealand within weeks."</p></div>
+  </div>
+  <div class="testi-cta">
+    <a href="#contact" class="btn-primary" style="display:inline-block;">Share Your Story</a>
+  </div>
+</section>
+
+<!-- BLOG (only 2) -->
+<section class="articles-section" id="blog">
+  <div class="section-title">
+    <h2>Blog & Resources</h2>
+    <div class="title-bar"></div>
+    <p>Career advice, visa guidance, and international job market updates</p>
+  </div>
+  <div class="articles-list">
+    <div class="article-card"><div class="article-img"><img src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?auto=format&fit=crop&w=800&q=80" alt="Visa Guide"></div><div class="article-body"><h3>Complete Visa Guide for International Professionals</h3><p>Everything you need to know about work visas, requirements, and application processes for different countries. <a href="#">Read Guide →</a></p></div></div>
+    <div class="article-card"><div class="article-img"><img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80" alt="Interview Tips"></div><div class="article-body"><h3>How to Ace International Job Interviews</h3><p>Expert tips on preparing for interviews with global employers, including cultural considerations, common questions, and follow-up strategies. <a href="#">Learn More →</a></p></div></div>
+  </div>
+  <div class="articles-cta">
+    <a href="#contact" class="btn-primary" style="display:inline-block;">Get Personalized Guidance</a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="section-title">
+    <h2>Frequently Asked Questions</h2>
+    <div class="title-bar"></div>
+    <p>Answers to common questions about our services and processes</p>
+  </div>
+  <div class="faq-inner">
+    <div class="faq-item"><div class="faq-q"><span class="faq-num">1.</span> How do I start my global career journey with CHEPS?</div><div class="faq-a">Simply reach out via WhatsApp or our contact form. We'll schedule a consultation to understand your career goals, qualifications, and preferred destinations. Our team will then guide you through the entire process.</div></div>
+    <div class="faq-item"><div class="faq-q"><span class="faq-num">2.</span> What countries do you recruit for?</div><div class="faq-a">We recruit for positions in Netherlands, Dubai (UAE), New Zealand, Ireland, Qatar, Portugal, Serbia, Slovakia, Kuwait, Saudi Arabia, and more. We continuously expand our network of partner employers worldwide.</div></div>
+    <div class="faq-item"><div class="faq-q"><span class="faq-num">3.</span> What is your visa success rate?</div><div class="faq-a">Our visa success rate is 98%. We have expert immigration consultants who guide you through every step of the process, ensuring all documentation is complete and accurate before submission.</div></div>
+    <div class="faq-item"><div class="faq-q"><span class="faq-num">4.</span> Do you offer relocation support?</div><div class="faq-a">Yes, we provide comprehensive relocation support including housing assistance, cultural orientation, settling-in services, and guidance on local systems such as banking and healthcare.</div></div>
+    <div class="faq-item"><div class="faq-q"><span class="faq-num">5.</span> What types of jobs do you offer?</div><div class="faq-a">We offer opportunities across various sectors including Technology, Healthcare, Engineering, Construction, Finance, Business, Hospitality, and more. We work with employers in multiple industries to find the right fit for your skills.</div></div>
+    <div class="faq-item"><div class="faq-q"><span class="faq-num">6.</span> How long does the entire process take?</div><div class="faq-a">The timeline varies depending on the country, job type, and visa processing times. Typically, the process can take 2-6 months from initial consultation to relocation. We provide regular updates throughout the journey.</div></div>
+    <div class="faq-item"><div class="faq-q"><span class="faq-num">7.</span> Do you charge a fee for your services?</div><div class="faq-a">We offer transparent pricing with no hidden fees. Our services are tailored to each client's needs. Contact us for a detailed consultation and personalized quote.</div></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="section-title">
+    <h2>Gallery</h2>
+    <div class="title-bar"></div>
+    <p>Company activities, client success stories, and events</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&h=300&q=80" alt="Team meeting"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=400&h=300&q=80" alt="Workshop"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=400&h=300&q=80" alt="Client success"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&h=300&q=80" alt="Team building"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=400&h=300&q=80" alt="Presentation"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=400&h=300&q=80" alt="Networking"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?auto=format&fit=crop&w=400&h=300&q=80" alt="Training session"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&h=300&q=80" alt="Success celebration"></div>
+  </div>
+  <div class="view-all-wrap" style="margin-top: 30px;">
+    <a href="#contact" class="btn-primary" style="display:inline-block;">View More Photos</a>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners-section" id="partners">
+  <div class="section-title">
+    <h2>Our Partners</h2>
+    <div class="title-bar"></div>
+    <p>Trusted by leading employers and institutions globally</p>
+  </div>
+  <div class="partners-grid">
+    <div class="partner-card">
+      <i class="fas fa-building"></i>
+      <h4>International Employers</h4>
+      <p>Fortune 500 companies and industry leaders</p>
+    </div>
+    <div class="partner-card">
+      <i class="fas fa-handshake"></i>
+      <h4>Recruitment Agencies</h4>
+      <p>Global recruitment partners</p>
+    </div>
+    <div class="partner-card">
+      <i class="fas fa-university"></i>
+      <h4>Institutional Partners</h4>
+      <p>Universities and professional bodies</p>
+    </div>
+    <div class="partner-card">
+      <i class="fas fa-globe-americas"></i>
+      <h4>Strategic Partners</h4>
+      <p>Government agencies and trade bodies</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <h2>Ready to Build Your Global Career?</h2>
+  <p>Join 200+ professionals who have successfully launched their international careers with CHEPS</p>
+  <a href="#contact" class="btn-primary"><i class="fas fa-paper-plane"></i> Start Your Journey Today</a>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-left">
+    <div class="section-eyebrow">Get In Touch</div>
+    <h2>Start Your Global Career Journey</h2>
+    <p>Tell us about your career goals, and we'll help you find the perfect international opportunity. Our team is ready to guide you every step of the way.</p>
+    <div class="contact-form">
+      <input type="text" placeholder="Your full name">
+      <input type="email" placeholder="Email address">
+      <input type="tel" placeholder="Phone number">
+      <select>
+        <option>Select service</option>
+        <option>Overseas Job Placement</option>
+        <option>Visa Assistance</option>
+        <option>Document Processing</option>
+        <option>Relocation Support</option>
+        <option>Interview Preparation</option>
+        <option>Career Guidance</option>
+        <option>Employer Matching</option>
+      </select>
+      <select>
+        <option>Preferred country</option>
+        <option>Netherlands</option>
+        <option>Dubai (UAE)</option>
+        <option>New Zealand</option>
+        <option>Ireland</option>
+        <option>Qatar</option>
+        <option>Portugal</option>
+        <option>Serbia</option>
+        <option>Slovakia</option>
+        <option>Kuwait</option>
+        <option>Saudi Arabia</option>
+      </select>
+      <textarea placeholder="Tell us about your career goals, qualifications, and preferred destinations..."></textarea>
+      <button type="button" id="contactEmailBtn">Send Enquiry →</button>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="contact-info">
+      <div class="ci-item"><div class="ci-icon"><i class="fab fa-whatsapp"></i></div><div class="ci-text"><h4>WhatsApp</h4><p>+254 7<br>Instant replies</p></div></div>
+      <div class="ci-item"><div class="ci-icon"><i class="fas fa-envelope"></i></div><div class="ci-text"><h4>Email</h4><p><br>We reply within 2h</p></div></div>
+      <div class="ci-item"><div class="ci-icon"><i class="fas fa-phone"></i></div><div class="ci-text"><h4>Phone</h4><p>+254 7<br>Available 9AM - 6PM</p></div></div>
+      <div class="ci-item"><div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div><div class="ci-text"><h4>Global Offices</h4><p>Serving clients worldwide<br>Remote support available</p></div></div>
+      <div class="ci-item"><div class="ci-icon"><i class="fas fa-clock"></i></div><div class="ci-text"><h4>Working Hours</h4><p>Monday - Friday<br>9:00 AM - 6:00 PM</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>CHEPS<span style="color:var(--orange);">Consultancy</span></h3>
+      <p>Building futures beyond borders . Trusted by professionals in 12+ countries worldwide.</p>
+      <p><strong>Vision:</strong> To be the leading global mobility and overseas employment consultancy.</p>
+      <p><strong>Mission:</strong> To connect skilled individuals with reputable international employers while providing expert guidance and seamless relocation solutions.</p>
+      <div style="display:flex; gap:12px; margin-top:16px;">
+        <a href="#" style="color:white;"><i class="fab fa-linkedin"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-facebook"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-youtube"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#stories">Success Stories</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Job Placement</a></li>
+        <li><a href="#services">Visa Assistance</a></li>
+        <li><a href="#services">Document Processing</a></li>
+        <li><a href="#services">Relocation Support</a></li>
+        <li><a href="#services">Career Guidance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="#countries">Netherlands</a></li>
+        <li><a href="#countries">Dubai</a></li>
+        <li><a href="#countries">New Zealand</a></li>
+        <li><a href="#countries">Ireland</a></li>
+        <li><a href="#countries">Qatar</a></li>
+        <li><a href="#countries">Portugal</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 CHEPS Consultancy — Building Futures Beyond Borders.Developed by Quantum Solutions</span>
+    <span>🌍 Global Career Solutions</span>
+  </div>
+</footer>
+
 <script>
-  (function() {
-    // ----- Menu toggle -----
-    const toggle = document.getElementById('menuToggle');
-    const dropdown = document.getElementById('navDropdown');
+  // Mobile toggle (for small screens)
+  const toggleBtn = document.getElementById('navToggleBtn');
+  const navMenu = document.getElementById('navLinks');
+  // We use dropdown as menu, so we just keep toggle for consistency
+  const navDropdown = document.getElementById('navDropdown');
+  const navLinksBtn = document.getElementById('navLinksBtn');
 
-    toggle.addEventListener('click', function(e) {
+  // Toggle dropdown on button click
+  if (navLinksBtn && navDropdown) {
+    navLinksBtn.addEventListener('click', function(e) {
       e.stopPropagation();
-      dropdown.classList.toggle('open');
-      const icon = toggle.querySelector('i');
-      if (dropdown.classList.contains('open')) {
-        icon.className = 'fas fa-times';
-      } else {
-        icon.className = 'fas fa-bars';
-      }
+      navDropdown.classList.toggle('open');
     });
-
     // Close dropdown when clicking outside
     document.addEventListener('click', function(e) {
-      if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
-        dropdown.classList.remove('open');
-        toggle.querySelector('i').className = 'fas fa-bars';
+      if (!navDropdown.contains(e.target) && e.target !== navLinksBtn) {
+        navDropdown.classList.remove('open');
       }
     });
-
-    // Close dropdown on link click (mobile friendly)
-    dropdown.querySelectorAll('a').forEach(link => {
+    // Close dropdown when a link is clicked
+    navDropdown.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', function() {
-        dropdown.classList.remove('open');
-        toggle.querySelector('i').className = 'fas fa-bars';
+        navDropdown.classList.remove('open');
+        // smooth scroll handled by global listener
       });
     });
+  }
 
-    // ----- Typewriter effect for "Beyond Borders" -----
-    const tw = document.querySelector('.typewriter-wrap');
-    if (tw) {
-      const text = 'Beyond Borders';
-      let idx = 0, deleting = false;
+  // Also handle mobile toggle button (fallback)
+  if (toggleBtn && navDropdown) {
+    toggleBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      navDropdown.classList.toggle('open');
+    });
+  }
+  
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      if(targetId === "#" || targetId === "") return;
+      const target = document.querySelector(targetId);
+      if(target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
 
-      function type() {
-        if (!deleting) {
-          if (idx < text.length) {
-            tw.textContent = text.substring(0, idx + 1);
-            idx++;
-            setTimeout(type, 80);
-          } else {
-            setTimeout(() => { deleting = true; setTimeout(type, 350); }, 1800);
-          }
+  // Contact form email
+  const contactEmailBtn = document.getElementById('contactEmailBtn');
+  if (contactEmailBtn) {
+    contactEmailBtn.addEventListener('click', function () {
+      const name = document.querySelector('#contact .contact-form input[type="text"]').value;
+      const email = document.querySelector('#contact .contact-form input[type="email"]').value;
+      const phone = document.querySelector('#contact .contact-form input[type="tel"]').value;
+      const service = document.querySelector('#contact .contact-form select').value;
+      const country = document.querySelector('#contact .contact-form select:last-of-type').value;
+      const message = document.querySelector('#contact .contact-form textarea').value;
+
+      const subject = encodeURIComponent('CHEPS Consultancy Enquiry');
+      const body = encodeURIComponent(
+`Name: ${name}
+
+Email: ${email}
+
+Phone: ${phone}
+
+Service Required: ${service}
+
+Preferred Country: ${country}
+
+Message:
+${message}`
+      );
+
+      const mailtoLink = `mailto:info@chepsconsultancy.com?subject=${subject}&body=${body}`;
+      const link = document.createElement('a');
+      link.href = mailtoLink;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
+
+  // Dark / Light theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-theme');
+      const icon = this.querySelector('i');
+      if (icon) {
+        if (document.body.classList.contains('dark-theme')) {
+          icon.classList.remove('fa-moon');
+          icon.classList.add('fa-sun');
         } else {
-          if (idx > 0) {
-            tw.textContent = text.substring(0, idx - 1);
-            idx--;
-            setTimeout(type, 50);
-          } else {
-            deleting = false;
-            setTimeout(type, 400);
-          }
+          icon.classList.remove('fa-sun');
+          icon.classList.add('fa-moon');
         }
       }
-      setTimeout(type, 500);
-    }
-
-    // ----- Navbar background on scroll -----
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 30) {
-        navbar.style.background = 'rgba(10, 22, 40, 0.94)';
-        navbar.style.borderBottom = '1px solid rgba(255,255,255,0.08)';
-      } else {
-        navbar.style.background = 'rgba(10, 22, 40, 0.78)';
-        navbar.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
-      }
     });
-
-    // ----- Smooth anchor scroll -----
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        const target = document.querySelector(targetId);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-
-  })();
+  }
 </script>
-
-<!-- you can paste additional sections (About, Services, etc.) below -->
 </body>
 </html>
-```

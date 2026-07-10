@@ -61,7 +61,7 @@
       background: var(--nav-bg);
       border-bottom: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 40px; height: 70px; /* increased height for logo clarity */
+      padding: 0 40px; height: 70px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
     .nav-logo {
@@ -70,14 +70,16 @@
       gap: 12px;
       text-decoration: none;
     }
+    /* LOGO — margin/container removed, image is clean and prominent */
     .nav-logo-img {
-      width: 70px;
-      height: 70px;
-      border-radius: 10px;
-      object-fit: cover;
+      width: 80px;
+      height: 80px;
+      object-fit: contain;      /* no crop, full logo visible */
       display: block;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      border: 1px solid rgba(212,112,58,0.2);
+      border: none;             /* no border */
+      box-shadow: none;         /* no shadow */
+      border-radius: 0;         /* no rounding */
+      background: transparent;  /* no background */
     }
     .nav-logo-text {
       font-family: 'Montserrat', sans-serif;
@@ -173,7 +175,7 @@
 
     @media (max-width: 768px) {
       nav { padding: 0 20px; height: 64px; }
-      .nav-logo-img { width: 42px; height: 42px; }
+      .nav-logo-img { width: 48px; height: 48px; }
       .nav-logo-text { font-size: 16px; }
       .nav-links-btn { padding: 6px 16px; font-size: 13px; }
       .nav-dropdown { right: 20px; min-width: 180px; top: 64px; }
@@ -244,15 +246,25 @@
     }
     .about-img-grid div { background: #ddd; overflow: hidden; }
     .about-img-grid div img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* image placeholders — clean & clear, no extra containers */
     .img-placeholder {
-      width: 110%; height: 190px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 36px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
-    .ip1 { background: linear-gradient(130deg, #0f3460, #16213e); }
-    .ip2 { background: linear-gradient(130deg, #1a4a7a, #2d6a9f); }
-    .ip3 { background: linear-gradient(130deg, #c0601a, #d4703a); }
-    .ip4 { background: linear-gradient(130deg, #e8945a, #f0a870); }
+    .img-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .ip1 { background: #0f3460; }
+    .ip2 { background: #1a4a7a; }
+    .ip3 { background: #c0601a; }
+    .ip4 { background: #e8945a; }
 
     .about-text { padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; }
     .section-eyebrow { color: var(--orange); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
@@ -291,7 +303,7 @@
     .popular-section { background: var(--bg-white); padding: 70px 60px; margin-bottom: var(--section-gap); }
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 10px; }
     .service-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--bg-white); }
-    .service-card-img { height: 190px; position: relative; overflow: hidden; } /* increased height for better visibility */
+    .service-card-img { height: 190px; position: relative; overflow: hidden; }
     .service-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .service-card-body { padding: 18px; }
     .service-card-body h3 { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
@@ -339,7 +351,7 @@
     .articles-section { background: var(--bg-white); padding: 70px 60px; margin-bottom: var(--section-gap); }
     .articles-list { display: flex; flex-direction: column; gap: 24px; margin-top: 10px; max-width: 800px; margin-left: auto; margin-right: auto; }
     .article-card { display: grid; grid-template-columns: 200px 1fr; gap: 20px; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
-    .article-img { height: 140px; border-radius: 8px; overflow: hidden; } /* increased height */
+    .article-img { height: 140px; border-radius: 8px; overflow: hidden; }
     .article-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .article-body h3 { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
     .article-body p { color: var(--text-mid); font-size: 13.5px; line-height: 1.7; }
@@ -427,7 +439,7 @@
     .gallery-section { background: var(--bg-white); padding: 70px 60px; margin-bottom: var(--section-gap); }
     .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; }
     .gallery-item {
-      height: 210px; /* increased height */
+      height: 210px;
       border-radius: 10px;
       overflow: hidden;
       position: relative;
@@ -540,9 +552,13 @@
 <div class="about-strip" id="about">
   <div class="about-img">
     <div class="about-img-grid">
-      <div><div class="img-placeholder ip1"><img src="https://i.pinimg.com/1200x/e9/4c/b5/e94cb554b547983079d2c5c89b2506d9.jpg" alt="team"></div></div>
+      <!-- team -->
+      <div><div class="img-placeholder ip1"><img src="https://i.pinimg.com/736x/62/4b/1e/624b1e1676c941ea3eaf2dca488d167b.jpg" alt="team"></div></div>
+      <!-- career -->
       <div><div class="img-placeholder ip2"><img src="https://i.pinimg.com/1200x/24/b6/9b/24b69b59d2cd3e5a5361c134c7202947.jpg" alt="career"></div></div>
+      <!-- global -->
       <div><div class="img-placeholder ip3"><img src="https://i.pinimg.com/1200x/8d/e0/9f/8de09fdf3ff6b9d24a4a0113af41d524.jpg" alt="global"></div></div>
+      <!-- success -->
       <div><div class="img-placeholder ip4"><img src="https://i.pinimg.com/1200x/57/ee/68/57ee68aa7f9876864733501b0627be68.jpg" alt="success"></div></div>
     </div>
   </div>
@@ -591,8 +607,8 @@
   </div>
   <div class="services-grid">
     <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/736x/ff/6c/60/ff6c607d782e2a45be81f022e3913ec0.jpg" alt="Tech Jobs"></div><div class="service-card-body"><h3>💻 Tech & IT</h3><p>Software engineers, data scientists, IT consultants - positions in Netherlands, Dubai, and Ireland.</p><div class="service-meta"><span>📍 Multiple Countries</span></div></div></div>
-    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/736x/e1/ad/63/e1ad63235ce8a7d9ac8846d50056eb0e.jpg" alt="Healthcare Jobs"></div><div class="service-card-body"><h3>🏥 Healthcare</h3><p>Nurses, physicians, allied health professionals - opportunities in New Zealand, Qatar, and Portugal.</p><div class="service-meta"><span>📍 Multiple Countries</span></div></div></div>
-    <div class="service-card"><div class="service-card-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&h=250&q=80" alt="Finance Jobs"></div><div class="service-card-body"><h3>💰 Finance & Business</h3><p>Banking, consulting, and management roles in Dubai, Saudi Arabia, and Luxembourg.</p><div class="service-meta"><span>📍 Multiple Countries</span></div></div></div>
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/1200x/12/f6/09/12f609fbddd332566118d711c39be574.jpg" alt="Healthcare Jobs"></div><div class="service-card-body"><h3>🏥 Healthcare</h3><p>Nurses, physicians, allied health professionals - opportunities in New Zealand, Qatar, and Portugal.</p><div class="service-meta"><span>📍 Multiple Countries</span></div></div></div>
+    <div class="service-card"><div class="service-card-img"><img src="https://i.pinimg.com/1200x/fc/0e/d2/fc0ed2dd7130a5fe1584359e5b4846cd.jpg" alt="Finance Jobs"></div><div class="service-card-body"><h3>💰 Finance & Business</h3><p>Banking, consulting, and management roles in Dubai, Saudi Arabia, and Luxembourg.</p><div class="service-meta"><span>📍 Multiple Countries</span></div></div></div>
   </div>
   <div class="view-all-wrap">
     <a href="#countries" class="btn-primary" style="display:inline-block;">View All Destinations →</a>

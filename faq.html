@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>FAQ — CHEP'S Consultancy</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* --- RESET & BASE --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #d4703a;
+      --orange-dark: #b85c28;
+      --orange-light: #e8945a;
+      --bg-light: #f9f5f1;
+      --bg-white: #ffffff;
+      --text-dark: #1a1a1a;
+      --text-mid: #444444;
+      --text-light: #777777;
+      --border: #e5e0da;
+      --nav-bg: #ffffff;
+      --hero-overlay: rgba(0,0,0,0.45);
+      --section-gap: 20px;
+      --shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    body { 
+      font-family: 'Open Sans', sans-serif; 
+      color: var(--text-dark); 
+      background: var(--bg-white); 
+      overflow-x: hidden; 
+      width: 100%; 
+      transition: background 0.2s, color 0.2s;
+    }
+    body.dark-theme {
+      --bg-light: #1e1e2a;
+      --bg-white: #15151e;
+      --text-dark: #f0f0f0;
+      --text-mid: #c0c0c0;
+      --text-light: #a0a0a0;
+      --border: #3a3a4a;
+      --nav-bg: #1a1a24;
+      --hero-overlay: rgba(0,0,0,0.65);
+    }
+    body.dark-theme .faq-item,
+    body.dark-theme .faq-category {
+      background: #1e1e2a;
+      border-color: #3a3a4a;
+    }
+    body.dark-theme .faq-question {
+      background: #1e1e2a;
+    }
+
+    /* --- NAV --- */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 70px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo-img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      display: block;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      background: transparent;
+    }
+    .nav-logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--text-dark);
+      letter-spacing: -0.3px;
+    }
+    .nav-logo-text span { color: var(--orange); }
+    
+    .nav-links-btn {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .nav-links-btn:hover { background: var(--orange-dark); }
+    .nav-links-btn i { font-size: 16px; }
+
+    .nav-dropdown {
+      position: absolute;
+      top: 70px;
+      right: 40px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 0;
+      min-width: 200px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 200;
+    }
+    .nav-dropdown.open { display: flex; }
+    .nav-dropdown a {
+      padding: 10px 24px;
+      text-decoration: none;
+      color: var(--text-mid);
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-dropdown a:hover {
+      background: var(--bg-light);
+      color: var(--orange);
+    }
+    body.dark-theme .nav-dropdown {
+      background: #1e1e2a;
+      border-color: #3a3a4a;
+    }
+    body.dark-theme .nav-dropdown a:hover {
+      background: #2a2a3a;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; position: relative; }
+    .theme-toggle {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-mid);
+      padding: 6px 10px;
+      border-radius: 30px;
+      transition: background 0.2s;
+    }
+    .theme-toggle:hover { background: rgba(0,0,0,0.05); }
+    .nav-toggle { display: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; height: 64px; }
+      .nav-logo-img { width: 48px; height: 48px; }
+      .nav-logo-text { font-size: 16px; }
+      .nav-links-btn { padding: 6px 16px; font-size: 13px; }
+      .nav-dropdown { right: 20px; min-width: 180px; top: 64px; }
+      .nav-right { gap: 6px; }
+    }
+
+    /* --- HERO --- */
+    .hero-faq {
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      padding: 60px 60px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+      margin-bottom: var(--section-gap);
+    }
+    .hero-faq::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      opacity: 0.20;
+      z-index: 1;
+    }
+    .hero-faq::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--hero-overlay);
+      z-index: 2;
+    }
+    .hero-faq .hero-content {
+      max-width: 700px;
+      position: relative;
+      z-index: 3;
+    }
+    .hero-faq .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .hero-faq .hero-content h1 span { color: var(--orange-light); }
+    .hero-faq .hero-content p {
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    /* --- FAQ SECTION --- */
+    .faq-section {
+      background: var(--bg-white);
+      padding: 70px 60px;
+      margin-bottom: var(--section-gap);
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .section-title h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .section-title p {
+      color: var(--text-light);
+      font-size: 15px;
+    }
+    .title-bar {
+      width: 50px;
+      height: 3px;
+      background: var(--orange);
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    /* --- FAQ SEARCH --- */
+    .faq-search {
+      max-width: 600px;
+      margin: 0 auto 40px;
+      position: relative;
+    }
+    .faq-search input {
+      width: 100%;
+      padding: 14px 20px 14px 48px;
+      border: 2px solid var(--border);
+      border-radius: 30px;
+      font-size: 15px;
+      font-family: 'Open Sans', sans-serif;
+      background: var(--bg-white);
+      color: var(--text-dark);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+    }
+    .faq-search input:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(212,112,58,0.15);
+    }
+    .faq-search input::placeholder {
+      color: var(--text-light);
+    }
+    .faq-search .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      font-size: 18px;
+    }
+    .faq-search .clear-search {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 16px;
+      cursor: pointer;
+      display: none;
+      padding: 4px;
+    }
+    .faq-search .clear-search.visible {
+      display: block;
+    }
+    .faq-search .clear-search:hover {
+      color: var(--orange);
+    }
+
+    /* --- FAQ CATEGORIES --- */
+    .faq-categories {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .faq-categories .cat-btn {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 8px 22px;
+      font-size: 13px;
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: 0.25s ease;
+      font-family: 'Open Sans', sans-serif;
+    }
+    .faq-categories .cat-btn:hover {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+    }
+    .faq-categories .cat-btn.active {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+    }
+    .faq-categories .cat-btn i {
+      margin-right: 6px;
+    }
+
+    /* --- FAQ ITEMS --- */
+    .faq-list {
+      max-width: 850px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg-white);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .faq-item:hover {
+      border-color: var(--orange-light);
+    }
+    .faq-item.active {
+      border-color: var(--orange);
+      box-shadow: 0 4px 16px rgba(212,112,58,0.10);
+    }
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      cursor: pointer;
+      background: var(--bg-white);
+      transition: background 0.2s;
+      gap: 16px;
+      user-select: none;
+    }
+    .faq-question:hover {
+      background: var(--bg-light);
+    }
+    .faq-question .q-icon {
+      color: var(--orange);
+      font-weight: 700;
+      font-size: 16px;
+      min-width: 28px;
+      flex-shrink: 0;
+    }
+    .faq-question .q-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-dark);
+      flex: 1;
+    }
+    .faq-question .q-toggle {
+      color: var(--text-light);
+      font-size: 18px;
+      transition: transform 0.3s, color 0.2s;
+      flex-shrink: 0;
+    }
+    .faq-item.active .faq-question .q-toggle {
+      transform: rotate(180deg);
+      color: var(--orange);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 24px;
+      color: var(--text-mid);
+      font-size: 14.5px;
+      line-height: 1.8;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+      padding: 0 24px 22px 24px;
+    }
+    .faq-answer ul, .faq-answer ol {
+      padding-left: 20px;
+      margin-top: 6px;
+    }
+    .faq-answer li {
+      margin-bottom: 4px;
+    }
+
+    /* --- NO RESULTS --- */
+    .faq-no-results {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-light);
+      display: none;
+    }
+    .faq-no-results i {
+      font-size: 40px;
+      color: var(--orange-light);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .faq-no-results h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+
+    /* --- CTA BAND --- */
+    .cta-band {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 70px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: var(--section-gap);
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(212,112,58,0.2) 0%, transparent 60%);
+    }
+    .cta-band h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .cta-band p {
+      color: rgba(255,255,255,0.72);
+      font-size: 15px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      position: relative;
+    }
+    .btn-primary:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background: #1a1a2e; color: rgba(255,255,255,0.7);
+      padding: 50px 60px 30px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand h3 { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; line-height: 1.8; margin-bottom: 16px; }
+    .footer-col h4 { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 14px; letter-spacing: 1px; text-transform: uppercase; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--orange-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; }
+    .footer-bottom span { color: rgba(255,255,255,0.5); }
+    .whatsapp-float {
+      position: fixed; bottom: 30px; right: 30px; background: #25D366; width: 56px; height: 56px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 99; text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .hero-faq { padding: 50px 24px; }
+      .hero-faq .hero-content h1 { font-size: 28px; }
+      .faq-section { padding: 50px 24px; }
+      .faq-question { padding: 14px 18px; }
+      .faq-question .q-text { font-size: 14px; }
+      .faq-item.active .faq-answer { padding: 0 18px 18px 18px; }
+      .cta-band { padding: 50px 24px; }
+      .cta-band h2 { font-size: 26px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .faq-categories .cat-btn { font-size: 12px; padding: 6px 14px; }
+      .faq-question .q-text { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/254721473081?text=Hello%20CHEPS%20Consultancy!%20I%20have%20a%20question." class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="https://i.pinimg.com/1200x/98/a9/c1/98a9c157f35ce774a6a0d742b7b3df2c.jpg"
+         alt="CHEP'S Consultancy Logo"
+         class="nav-logo-img">
+    <span class="nav-logo-text">CHEP'S<span>Consultancy</span></span>
+  </a>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><i class="fas fa-moon"></i></button>
+    <button class="nav-links-btn" id="navLinksBtn"><i class="fas fa-bars"></i> Menu</button>
+    <div class="nav-dropdown" id="navDropdown">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="countries.html">Countries</a>
+      <a href="process.html">Process</a>
+      <a href="stories.html">Stories</a>
+      <a href="blog.html">Blog</a>
+      <a href="faq.html">FAQ</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="partners.html">Partners</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-faq" id="faq-hero">
+  <div class="hero-content">
+    <h1>Frequently <span>Asked Questions</span></h1>
+    <p>Find answers to common questions about our services, processes, and international career opportunities.</p>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq-section" id="faq">
+  <div class="section-title">
+    <h2>Got Questions? We've Got Answers</h2>
+    <div class="title-bar"></div>
+    <p>Everything you need to know about working with us</p>
+  </div>
+
+  <!-- Search -->
+  <div class="faq-search">
+    <i class="fas fa-search search-icon"></i>
+    <input type="text" id="faqSearch" placeholder="Search for questions..." />
+    <button class="clear-search" id="clearSearch"><i class="fas fa-times"></i></button>
+  </div>
+
+  <!-- Categories -->
+  <div class="faq-categories" id="faqCategories">
+    <button class="cat-btn active" data-category="all"><i class="fas fa-th-list"></i> All</button>
+    <button class="cat-btn" data-category="general"><i class="fas fa-info-circle"></i> General</button>
+    <button class="cat-btn" data-category="services"><i class="fas fa-briefcase"></i> Services</button>
+    <button class="cat-btn" data-category="visa"><i class="fas fa-passport"></i> Visa</button>
+    <button class="cat-btn" data-category="relocation"><i class="fas fa-home"></i> Relocation</button>
+    <button class="cat-btn" data-category="jobs"><i class="fas fa-search"></i> Jobs</button>
+  </div>
+
+  <!-- FAQ List -->
+  <div class="faq-list" id="faqList">
+    <!-- General -->
+    <div class="faq-item" data-category="general">
+      <div class="faq-question">
+        <span class="q-icon">Q</span>
+        <span class="q-text">What is CHEP'S Consultancy?</span>
+        <span class="q-toggle"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="faq-answer">
+        <p>CHEP'S Consultancy is a professional overseas employment and relocation consultancy dedicated to helping individuals secure international job opportunities and successfully transition to life abroad. We provide guidance throughout the entire process, from job sourcing and application support to visa processing and relocation assistance.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="general">
+      <div class="faq-question">
+        <span class="q-icon">Q</span>
+        <span class="q-text">How do I start my global career journey with CHEPS?</span>
+        <span class="q-toggle"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="faq-answer">
+        <p>Simply reach out via WhatsApp or our contact form. We'll schedule a consultation to understand your career goals, qualifications, and preferred destinations. Our team will then guide you through the entire process, from job matching to relocation support.</p>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div class="faq-item" data-category="services">
+      <div class="faq-question">
+        <span class="q-icon">Q</span>
+        <span class="q-text">What services do you offer?</span>
+        <span class="q-toggle"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="faq-answer">
+        <p>We offer a comprehensive range of services including:</p>
+        <ul>
+          <li><strong>Overseas Job Placement</strong> — Connecting you with reputable international employers</li>
+          <li><strong>Visa Assistance</strong> — Expert guidance on work visas and immigration pathways</li>
+          <li><strong>Document Processing</strong> — Professional document preparation and verification</li>
+          <li><strong>Relocation Support</strong> — Housing, cultural orientation, and settling-in services</li>
+          <li><strong>Interview Coaching</strong> — Expert preparation for international job interviews</li>
+          <li><strong>Career Guidance</strong> — Personalized counseling for your global career</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="services">
+      <div class="faq-question">
+        <span class="q-icon">Q</span>
+        <span class="q-text">Do you charge a fee for your services?</span>
+        <span class="q-toggle"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="faq-answer">
+        <p>We offer transparent pricing with no hidden fees. Our services are tailored to each client's needs. Contact us for a detailed consultation and personalized quote based on your specific requirements and destination.</p>
+      </div>
+    </div>
+
+    <!-- Visa -->
+    <div class="faq-item" data-category="visa">
+      <div class="faq-question">
+        <span class="q-icon">Q</span>
+        <span class="q-text">What is your visa success rate?</span>
+        <span class="q-toggle"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="faq-answer">
+        <p>Our visa success rate is <strong>98%</strong>. We have expert immigration consultants who guide you through every step of the process, ensuring all documentation is complete and accurate before submission. We stay updated on the latest visa requirements for all our destination countries.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="visa">
+      <div class="faq-question">
+        <span class="q-icon">Q</span>
+        <span class="q-text">How long does the visa process take?</span>
+        <span class="q-toggle"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="faq-answer">
+        <p>The timeline varies depending on the country, job type, and visa processing times. Typically, the process can take <strong>2-6 months</strong> from initial consultation to relocation. We provide regular updates throughout the journey and help expedite the process where possible.</p>
+      </div>
+    </div>
+
+    <!-- Relocation -->
+    <div class="faq-item" data-category="relocation">
+      <div class="faq-question">
+        <span class="q-icon">Q</span>
+        <span class="q-text">Do you offer relocation support?</span>
+        <span class="q-toggle"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="faq-answer">
+        <p>Yes, we provide comprehensive relocation support including:</p>
+        <ul>
+          <li><strong>Housing Assistance</strong> — Help finding suitable accommodation</li>
+          <li><strong>Cultural Orientation</strong> — Understanding local customs and workplace culture</li>
+          <li><strong>Settling-in Services</strong> — Guidance on banking, healthcare, and local systems</li>
+          <li><strong>Ongoing Support</strong> — We're here to help even after you arrive</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="relocation">
+      <div class="faq-question">
+        <span class="q-icon">Q</span>
+        <span class="q-text">What support do you provide after I arrive?</span>
+        <span class="q-toggle"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="faq-answer">
+        <p>Our support doesn't end when you arrive. We provide ongoing assistance including:</p>
+        <ul>
+          <li>Check-ins during your first few months</li>
+          <li>Help with any issues that arise with your employer or accommodation</li>
+          <li>Guidance on local services and systems</li>
+          <li>Connecting you with expat communities and support networks</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Jobs -->
+    <div class="faq-item" data-category="jobs">
+      <div class="faq-question">
+        <span class="q-icon">Q</span>
+        <span class="q-text">What countries do you recruit for?</span>
+        <span class="q-toggle"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="faq-answer">
+        <p>We recruit for positions in <strong>10 countries</strong>:</p>
+        <ul>
+          <li>🇳🇱 Netherlands</li>
+          <li>🇦🇪 Dubai (UAE)</li>
+          <li>🇳🇿 New Zealand</li>
+          <li>🇮🇪 Ireland</li>
+          <li>🇶🇦 Qatar</li>
+          <li>🇵🇹 Portugal</li>
+          <li>🇷🇸 Serbia</li>
+          <li>🇸🇰 Slovakia</li>
+          <li>🇰🇼 Kuwait</li>
+          <li>🇸🇦 Saudi Arabia</li>
+        </ul>
+        <p>We continuously expand our network of partner employers worldwide.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="jobs">
+      <div class="faq-question">
+        <span class="q-icon">Q</span>
+        <span class="q-text">What types of jobs do you offer?</span>
+        <span class="q-toggle"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="faq-answer">
+        <p>We offer opportunities across various sectors including:</p>
+        <ul>
+          <li>🏨 Hospitality & Tourism</li>
+          <li>🧹 Cleaning Services</li>
+          <li>🚜 Agriculture & Farming</li>
+          <li>🏗️ Construction</li>
+          <li>📦 Warehousing & Logistics</li>
+          <li>🏭 Manufacturing & Factory</li>
+          <li>🛍️ Retail</li>
+          <li>🏠 Domestic Services</li>
+          <li>🚚 Transportation & Delivery</li>
+          <li>🍽️ Food Processing</li>
+          <li>🌿 Landscaping & Outdoor</li>
+          <li>♻️ Recycling & Waste Management</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="jobs">
+      <div class="faq-question">
+        <span class="q-icon">Q</span>
+        <span class="q-text">Do I need experience for these jobs?</span>
+        <span class="q-toggle"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="faq-answer">
+        <p>Many of our opportunities are <strong>entry-level and unskilled positions</strong> that don't require prior experience. We provide training and support to help you succeed. Some positions may require basic skills or language proficiency, which we assess during the consultation process.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="general">
+      <div class="faq-question">
+        <span class="q-icon">Q</span>
+        <span class="q-text">How long does the entire process take?</span>
+        <span class="q-toggle"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="faq-answer">
+        <p>The timeline varies depending on the country, job type, and visa processing times. Typically, the process can take <strong>2-6 months</strong> from initial consultation to relocation. We provide regular updates throughout the journey and work to expedite the process where possible.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Results -->
+  <div class="faq-no-results" id="faqNoResults">
+    <i class="fas fa-search"></i>
+    <h3>No questions found</h3>
+    <p>Try adjusting your search term or filter</p>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <h2>Still Have Questions?</h2>
+  <p>Our team is here to help. Contact us for personalized assistance with your international career journey.</p>
+  <a href="contact.html" class="btn-primary"><i class="fas fa-paper-plane"></i> Contact Us</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>CHEP'S<span style="color:var(--orange);">Consultancy</span></h3>
+      <p>Building futures beyond borders. Trusted by professionals in 10 countries worldwide.</p>
+      <p><strong>Vision:</strong> To be the leading global mobility and overseas employment consultancy.</p>
+      <p><strong>Mission:</strong> To connect skilled individuals with reputable international employers while providing expert guidance and seamless relocation solutions.</p>
+      <div style="display:flex; gap:12px; margin-top:16px;">
+        <a href="#" style="color:white;"><i class="fab fa-linkedin"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-facebook"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-youtube"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="stories.html">Success Stories</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">Job Placement</a></li>
+        <li><a href="services.html">Visa Assistance</a></li>
+        <li><a href="services.html">Document Processing</a></li>
+        <li><a href="services.html">Relocation Support</a></li>
+        <li><a href="services.html">Career Guidance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="countries.html">Netherlands</a></li>
+        <li><a href="countries.html">Dubai</a></li>
+        <li><a href="countries.html">New Zealand</a></li>
+        <li><a href="countries.html">Ireland</a></li>
+        <li><a href="countries.html">Qatar</a></li>
+        <li><a href="countries.html">Portugal</a></li>
+        <li><a href="countries.html">Serbia</a></li>
+        <li><a href="countries.html">Slovakia</a></li>
+        <li><a href="countries.html">Kuwait</a></li>
+        <li><a href="countries.html">Saudi Arabia</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 CHEP'S Consultancy — Building Futures Beyond Borders. Developed by Quantum Solutions</span>
+    <span>🌍 Global Career Solutions</span>
+  </div>
+</footer>
+
+<script>
+  // Dropdown toggle
+  const navLinksBtn = document.getElementById('navLinksBtn');
+  const navDropdown = document.getElementById('navDropdown');
+
+  if (navLinksBtn && navDropdown) {
+    navLinksBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      navDropdown.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!navDropdown.contains(e.target) && e.target !== navLinksBtn) {
+        navDropdown.classList.remove('open');
+      }
+    });
+    navDropdown.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function() {
+        navDropdown.classList.remove('open');
+      });
+    });
+  }
+
+  // Dark theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-theme');
+      const icon = this.querySelector('i');
+      if (icon) {
+        if (document.body.classList.contains('dark-theme')) {
+          icon.classList.remove('fa-moon');
+          icon.classList.add('fa-sun');
+        } else {
+          icon.classList.remove('fa-sun');
+          icon.classList.add('fa-moon');
+        }
+      }
+    });
+  }
+
+  // --- FAQ Functionality ---
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    const faqSearch = document.getElementById('faqSearch');
+    const clearSearch = document.getElementById('clearSearch');
+    const faqNoResults = document.getElementById('faqNoResults');
+    const categoryBtns = document.querySelectorAll('.cat-btn');
+    let currentCategory = 'all';
+    let searchTerm = '';
+
+    // Toggle FAQ items
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      question.addEventListener('click', function() {
+        const isActive = item.classList.contains('active');
+        // Close all others
+        faqItems.forEach(other => {
+          if (other !== item) other.classList.remove('active');
+        });
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    // Search functionality
+    faqSearch.addEventListener('input', function() {
+      searchTerm = this.value.toLowerCase().trim();
+      clearSearch.classList.toggle('visible', searchTerm.length > 0);
+      filterFAQs();
+    });
+
+    clearSearch.addEventListener('click', function() {
+      faqSearch.value = '';
+      searchTerm = '';
+      clearSearch.classList.remove('visible');
+      filterFAQs();
+      faqSearch.focus();
+    });
+
+    // Category filter
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentCategory = this.dataset.category;
+        filterFAQs();
+      });
+    });
+
+    function filterFAQs() {
+      let visibleCount = 0;
+
+      faqItems.forEach(item => {
+        const category = item.dataset.category;
+        const text = item.querySelector('.q-text').textContent.toLowerCase();
+        const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+        const matchesSearch = text.includes(searchTerm) || answer.includes(searchTerm);
+        const matchesCategory = currentCategory === 'all' || category === currentCategory;
+
+        if (matchesSearch && matchesCategory) {
+          item.style.display = '';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      // Show/hide no results
+      faqNoResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    // Open first item by default
+    if (faqItems.length > 0) {
+      faqItems[0].classList.add('active');
+    }
+  });
+</script>
+</body>
+</html>

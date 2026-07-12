@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Countries — CHEP'S Consultancy</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* --- RESET & BASE --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #d4703a;
+      --orange-dark: #b85c28;
+      --orange-light: #e8945a;
+      --bg-light: #f9f5f1;
+      --bg-white: #ffffff;
+      --text-dark: #1a1a1a;
+      --text-mid: #444444;
+      --text-light: #777777;
+      --border: #e5e0da;
+      --nav-bg: #ffffff;
+      --hero-overlay: rgba(0,0,0,0.45);
+      --section-gap: 20px;
+    }
+    body { 
+      font-family: 'Open Sans', sans-serif; 
+      color: var(--text-dark); 
+      background: var(--bg-white); 
+      overflow-x: hidden; 
+      width: 100%; 
+      transition: background 0.2s, color 0.2s;
+    }
+    body.dark-theme {
+      --bg-light: #1e1e2a;
+      --bg-white: #15151e;
+      --text-dark: #f0f0f0;
+      --text-mid: #c0c0c0;
+      --text-light: #a0a0a0;
+      --border: #3a3a4a;
+      --nav-bg: #1a1a24;
+      --hero-overlay: rgba(0,0,0,0.65);
+    }
+    body.dark-theme .country-card,
+    body.dark-theme .partner-card,
+    body.dark-theme .testi-card {
+      background: #1e1e2a;
+      border-color: #3a3a4a;
+    }
+    body.dark-theme .contact-form input,
+    body.dark-theme .contact-form textarea,
+    body.dark-theme .contact-form select {
+      background: #1e1e2a;
+      color: #f0f0f0;
+      border-color: #3a3a4a;
+    }
+
+    /* --- NAV --- */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 70px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo-img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      display: block;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      background: transparent;
+    }
+    .nav-logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--text-dark);
+      letter-spacing: -0.3px;
+    }
+    .nav-logo-text span { color: var(--orange); }
+    
+    .nav-links-btn {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .nav-links-btn:hover { background: var(--orange-dark); }
+    .nav-links-btn i { font-size: 16px; }
+
+    .nav-dropdown {
+      position: absolute;
+      top: 70px;
+      right: 40px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 0;
+      min-width: 200px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 200;
+    }
+    .nav-dropdown.open { display: flex; }
+    .nav-dropdown a {
+      padding: 10px 24px;
+      text-decoration: none;
+      color: var(--text-mid);
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-dropdown a:hover {
+      background: var(--bg-light);
+      color: var(--orange);
+    }
+    body.dark-theme .nav-dropdown {
+      background: #1e1e2a;
+      border-color: #3a3a4a;
+    }
+    body.dark-theme .nav-dropdown a:hover {
+      background: #2a2a3a;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; position: relative; }
+    .theme-toggle {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-mid);
+      padding: 6px 10px;
+      border-radius: 30px;
+      transition: background 0.2s;
+    }
+    .theme-toggle:hover { background: rgba(0,0,0,0.05); }
+    .nav-toggle { display: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; height: 64px; }
+      .nav-logo-img { width: 48px; height: 48px; }
+      .nav-logo-text { font-size: 16px; }
+      .nav-links-btn { padding: 6px 16px; font-size: 13px; }
+      .nav-dropdown { right: 20px; min-width: 180px; top: 64px; }
+      .nav-right { gap: 6px; }
+    }
+
+    /* --- HERO --- */
+    .hero-countries {
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      padding: 60px 60px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+      margin-bottom: var(--section-gap);
+    }
+    .hero-countries::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://i.pinimg.com/1200x/6f/52/d0/6f52d0b306fd06653c1eb0391d7e62f4.jpg') center/cover no-repeat;
+      opacity: 0.30;
+      z-index: 1;
+    }
+    .hero-countries::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--hero-overlay);
+      z-index: 2;
+    }
+    .hero-countries .hero-content {
+      max-width: 700px;
+      position: relative;
+      z-index: 3;
+    }
+    .hero-countries .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .hero-countries .hero-content h1 span { color: var(--orange-light); }
+    .hero-countries .hero-content p {
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    /* --- COUNTRIES GRID --- */
+    .countries-section {
+      background: var(--bg-white);
+      padding: 70px 60px;
+      margin-bottom: var(--section-gap);
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .section-title h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .section-title p {
+      color: var(--text-light);
+      font-size: 15px;
+    }
+    .title-bar {
+      width: 50px;
+      height: 3px;
+      background: var(--orange);
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    .countries-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .country-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+    .country-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.10);
+      border-color: var(--orange);
+    }
+    .country-card-img {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    .country-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .country-card:hover .country-card-img img {
+      transform: scale(1.05);
+    }
+    .country-card-img .flag-overlay {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 36px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      background: rgba(255,255,255,0.85);
+      border-radius: 50%;
+      padding: 4px;
+      line-height: 1;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    body.dark-theme .country-card-img .flag-overlay {
+      background: rgba(30,30,42,0.85);
+    }
+    .country-card-body {
+      padding: 22px 24px 26px;
+    }
+    .country-card-body h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .country-card-body .country-sub {
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .country-card-body p {
+      color: var(--text-mid);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .country-card-body .country-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .country-card-body .country-tags span {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 14px;
+      font-size: 12px;
+      color: var(--text-light);
+      transition: 0.2s ease;
+    }
+    .country-card-body .country-tags span:hover {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+    }
+
+    /* --- CTA BAND --- */
+    .cta-band {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 70px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: var(--section-gap);
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(212,112,58,0.2) 0%, transparent 60%);
+    }
+    .cta-band h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .cta-band p {
+      color: rgba(255,255,255,0.72);
+      font-size: 15px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      position: relative;
+    }
+    .btn-primary:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background: #1a1a2e; color: rgba(255,255,255,0.7);
+      padding: 50px 60px 30px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand h3 { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; line-height: 1.8; margin-bottom: 16px; }
+    .footer-col h4 { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 14px; letter-spacing: 1px; text-transform: uppercase; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--orange-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; }
+    .footer-bottom span { color: rgba(255,255,255,0.5); }
+    .whatsapp-float {
+      position: fixed; bottom: 30px; right: 30px; background: #25D366; width: 56px; height: 56px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 99; text-decoration: none;
+    }
+
+    @media (max-width: 992px) {
+      .countries-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .hero-countries { padding: 50px 24px; }
+      .hero-countries .hero-content h1 { font-size: 28px; }
+      .countries-section { padding: 50px 24px; }
+      .countries-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .cta-band { padding: 50px 24px; }
+      .cta-band h2 { font-size: 26px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .countries-grid { grid-template-columns: 1fr; }
+      .country-card-img { height: 170px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/254721473081?text=Hello%20CHEPS%20Consultancy!%20I'm%20interested%20in%20working%20abroad." class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="https://i.pinimg.com/1200x/98/a9/c1/98a9c157f35ce774a6a0d742b7b3df2c.jpg"
+         alt="CHEP'S Consultancy Logo"
+         class="nav-logo-img">
+    <span class="nav-logo-text">CHEP'S<span>Consultancy</span></span>
+  </a>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><i class="fas fa-moon"></i></button>
+    <button class="nav-links-btn" id="navLinksBtn"><i class="fas fa-bars"></i> Menu</button>
+    <div class="nav-dropdown" id="navDropdown">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="countries.html">Countries</a>
+      <a href="process.html">Process</a>
+      <a href="stories.html">Stories</a>
+      <a href="blog.html">Blog</a>
+      <a href="faq.html">FAQ</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="partners.html">Partners</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-countries" id="countries-hero">
+  <div class="hero-content">
+    <h1>Our <span>Destinations</span></h1>
+    <p>We connect you with employment opportunities across 10 countries worldwide. Each destination offers unique opportunities for unskilled and entry-level workers.</p>
+  </div>
+</section>
+
+<!-- COUNTRIES GRID -->
+<section class="countries-section" id="countries">
+  <div class="section-title">
+    <h2>Where We Place You</h2>
+    <div class="title-bar"></div>
+    <p>Explore the countries where we have active job opportunities</p>
+  </div>
+
+  <div class="countries-grid">
+    <!-- Netherlands -->
+    <div class="country-card">
+      <div class="country-card-img">
+        <img src="https://i.pinimg.com/1200x/4f/1e/0b/4f1e0b9487d438721eaceb9a5149580a.jpg" alt="Netherlands">
+        <div class="flag-overlay">🇳🇱</div>
+      </div>
+      <div class="country-card-body">
+        <h3>Netherlands</h3>
+        <span class="country-sub">🇳🇱 Amsterdam • Rotterdam</span>
+        <p>Known for its strong economy and excellent work conditions. Opportunities in hospitality, logistics, manufacturing, and agriculture.</p>
+        <div class="country-tags">
+          <span>Hospitality</span>
+          <span>Logistics</span>
+          <span>Manufacturing</span>
+          <span>Farming</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dubai (UAE) -->
+    <div class="country-card">
+      <div class="country-card-img">
+        <img src="https://i.pinimg.com/736x/5c/c8/dd/5cc8dd51b57d0476ad2ce1ce794dae9f.jpg" alt="Dubai">
+        <div class="flag-overlay">🇦🇪</div>
+      </div>
+      <div class="country-card-body">
+        <h3>Dubai (UAE)</h3>
+        <span class="country-sub">🇦🇪 Dubai • Abu Dhabi</span>
+        <p>A global hub with tax-free income and diverse job opportunities. Ideal for hospitality, construction, retail, and domestic services.</p>
+        <div class="country-tags">
+          <span>Hospitality</span>
+          <span>Construction</span>
+          <span>Retail</span>
+          <span>Domestic</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Zealand -->
+    <div class="country-card">
+      <div class="country-card-img">
+        <img src="https://i.pinimg.com/1200x/b5/ff/20/b5ff20e7734fa12eb1a9dafb676fde89.jpg" alt="New Zealand">
+        <div class="flag-overlay">🇳🇿</div>
+      </div>
+      <div class="country-card-body">
+        <h3>New Zealand</h3>
+        <span class="country-sub">🇳🇿 Auckland • Christchurch</span>
+        <p>Beautiful landscapes and a welcoming work environment. Strong demand for agriculture, food processing, and farming workers.</p>
+        <div class="country-tags">
+          <span>Agriculture</span>
+          <span>Food Processing</span>
+          <span>Farming</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ireland -->
+    <div class="country-card">
+      <div class="country-card-img">
+        <img src="https://i.pinimg.com/736x/9e/9a/aa/9e9aaa719cc47d9099b3af4e318a4f96.jpg" alt="Ireland">
+        <div class="flag-overlay">🇮🇪</div>
+      </div>
+      <div class="country-card-body">
+        <h3>Ireland</h3>
+        <span class="country-sub">🇮🇪 Dublin • Cork</span>
+        <p>English-speaking country with a growing economy. Opportunities in hospitality, warehousing, farming, and domestic services.</p>
+        <div class="country-tags">
+          <span>Hospitality</span>
+          <span>Warehousing</span>
+          <span>Farming</span>
+          <span>Domestic</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Qatar -->
+    <div class="country-card">
+      <div class="country-card-img">
+        <img src="https://i.pinimg.com/736x/95/61/3a/95613a7426d5b59663d7d981c2df2e6c.jpg" alt="Qatar">
+        <div class="flag-overlay">🇶🇦</div>
+      </div>
+      <div class="country-card-body">
+        <h3>Qatar</h3>
+        <span class="country-sub">🇶🇦 Doha</span>
+        <p>Fast-growing economy with tax-free salaries. High demand for construction, domestic services, and hospitality workers.</p>
+        <div class="country-tags">
+          <span>Construction</span>
+          <span>Domestic</span>
+          <span>Hospitality</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Portugal -->
+    <div class="country-card">
+      <div class="country-card-img">
+        <img src="https://i.pinimg.com/1200x/12/e1/2c/12e12ca3fd689dc717835e032fb87de0.jpg" alt="Portugal">
+        <div class="flag-overlay">🇵🇹</div>
+      </div>
+      <div class="country-card-body">
+        <h3>Portugal</h3>
+        <span class="country-sub">🇵🇹 Lisbon • Porto</span>
+        <p>Beautiful weather and a growing job market. Opportunities in agriculture, manufacturing, hospitality, and food processing.</p>
+        <div class="country-tags">
+          <span>Agriculture</span>
+          <span>Manufacturing</span>
+          <span>Hospitality</span>
+          <span>Food Processing</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Serbia -->
+    <div class="country-card">
+      <div class="country-card-img">
+        <img src="https://i.pinimg.com/736x/50/3d/a2/503da2de22f859a4dba96fa9609015cd.jpg" alt="Serbia">
+        <div class="flag-overlay">🇷🇸</div>
+      </div>
+      <div class="country-card-body">
+        <h3>Serbia</h3>
+        <span class="country-sub">🇷🇸 Belgrade</span>
+        <p>Emerging market with growing industrial sector. Opportunities in manufacturing, engineering, and factory work.</p>
+        <div class="country-tags">
+          <span>Manufacturing</span>
+          <span>Engineering</span>
+          <span>Factory</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slovakia -->
+    <div class="country-card">
+      <div class="country-card-img">
+        <img src="https://i.pinimg.com/736x/e0/c9/dd/e0c9dd37d3e0285095d3f85ca751d9b6.jpg" alt="Slovakia">
+        <div class="flag-overlay">🇸🇰</div>
+      </div>
+      <div class="country-card-body">
+        <h3>Slovakia</h3>
+        <span class="country-sub">🇸🇰 Bratislava</span>
+        <p>Central European location with strong manufacturing base. Opportunities in factory work, assembly, and production lines.</p>
+        <div class="country-tags">
+          <span>Manufacturing</span>
+          <span>Factory</span>
+          <span>Assembly</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kuwait -->
+    <div class="country-card">
+      <div class="country-card-img">
+        <img src="https://i.pinimg.com/1200x/38/2c/44/382c44ac6efadbfcbd4c88fe557a9bdc.jpg" alt="Kuwait">
+        <div class="flag-overlay">🇰🇼</div>
+      </div>
+      <div class="country-card-body">
+        <h3>Kuwait</h3>
+        <span class="country-sub">🇰🇼 Kuwait City</span>
+        <p>Oil-rich nation with tax-free income. Demand for construction, domestic services, and logistics workers.</p>
+        <div class="country-tags">
+          <span>Construction</span>
+          <span>Domestic</span>
+          <span>Logistics</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saudi Arabia -->
+    <div class="country-card">
+      <div class="country-card-img">
+        <img src="https://i.pinimg.com/736x/74/f5/4f/74f54f09f2abd285d6808cc1e84fba94.jpg" alt="Saudi Arabia">
+        <div class="flag-overlay">🇸🇦</div>
+      </div>
+      <div class="country-card-body">
+        <h3>Saudi Arabia</h3>
+        <span class="country-sub">🇸🇦 Riyadh • Jeddah</span>
+        <p>Rapidly growing economy with Vision 2030 initiatives. Opportunities in construction, domestic services, and hospitality.</p>
+        <div class="country-tags">
+          <span>Construction</span>
+          <span>Domestic</span>
+          <span>Hospitality</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <h2>Ready to Work Abroad?</h2>
+  <p>Let us help you find the perfect job in your dream destination. Contact us today to start your journey.</p>
+  <a href="contact.html" class="btn-primary"><i class="fas fa-paper-plane"></i> Get Started Now</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>CHEP'S<span style="color:var(--orange);">Consultancy</span></h3>
+      <p>Building futures beyond borders. Trusted by professionals in 10 countries worldwide.</p>
+      <p><strong>Vision:</strong> To be the leading global mobility and overseas employment consultancy.</p>
+      <p><strong>Mission:</strong> To connect skilled individuals with reputable international employers while providing expert guidance and seamless relocation solutions.</p>
+      <div style="display:flex; gap:12px; margin-top:16px;">
+        <a href="#" style="color:white;"><i class="fab fa-linkedin"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-facebook"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-youtube"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="index.html#stories">Success Stories</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">Job Placement</a></li>
+        <li><a href="services.html">Visa Assistance</a></li>
+        <li><a href="services.html">Document Processing</a></li>
+        <li><a href="services.html">Relocation Support</a></li>
+        <li><a href="services.html">Career Guidance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="countries.html">Netherlands</a></li>
+        <li><a href="countries.html">Dubai</a></li>
+        <li><a href="countries.html">New Zealand</a></li>
+        <li><a href="countries.html">Ireland</a></li>
+        <li><a href="countries.html">Qatar</a></li>
+        <li><a href="countries.html">Portugal</a></li>
+        <li><a href="countries.html">Serbia</a></li>
+        <li><a href="countries.html">Slovakia</a></li>
+        <li><a href="countries.html">Kuwait</a></li>
+        <li><a href="countries.html">Saudi Arabia</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 CHEP'S Consultancy — Building Futures Beyond Borders. Developed by Quantum Solutions</span>
+    <span>🌍 Global Career Solutions</span>
+  </div>
+</footer>
+
+<script>
+  // Dropdown toggle
+  const navLinksBtn = document.getElementById('navLinksBtn');
+  const navDropdown = document.getElementById('navDropdown');
+
+  if (navLinksBtn && navDropdown) {
+    navLinksBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      navDropdown.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!navDropdown.contains(e.target) && e.target !== navLinksBtn) {
+        navDropdown.classList.remove('open');
+      }
+    });
+    navDropdown.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function() {
+        navDropdown.classList.remove('open');
+      });
+    });
+  }
+
+  // Dark theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-theme');
+      const icon = this.querySelector('i');
+      if (icon) {
+        if (document.body.classList.contains('dark-theme')) {
+          icon.classList.remove('fa-moon');
+          icon.classList.add('fa-sun');
+        } else {
+          icon.classList.remove('fa-sun');
+          icon.classList.add('fa-moon');
+        }
+      }
+    });
+  }
+</script>
+</body>
+</html>

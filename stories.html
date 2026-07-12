@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Success Stories — CHEP'S Consultancy</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* --- RESET & BASE --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #d4703a;
+      --orange-dark: #b85c28;
+      --orange-light: #e8945a;
+      --bg-light: #f9f5f1;
+      --bg-white: #ffffff;
+      --text-dark: #1a1a1a;
+      --text-mid: #444444;
+      --text-light: #777777;
+      --border: #e5e0da;
+      --nav-bg: #ffffff;
+      --hero-overlay: rgba(0,0,0,0.45);
+      --section-gap: 20px;
+    }
+    body { 
+      font-family: 'Open Sans', sans-serif; 
+      color: var(--text-dark); 
+      background: var(--bg-white); 
+      overflow-x: hidden; 
+      width: 100%; 
+      transition: background 0.2s, color 0.2s;
+    }
+    body.dark-theme {
+      --bg-light: #1e1e2a;
+      --bg-white: #15151e;
+      --text-dark: #f0f0f0;
+      --text-mid: #c0c0c0;
+      --text-light: #a0a0a0;
+      --border: #3a3a4a;
+      --nav-bg: #1a1a24;
+      --hero-overlay: rgba(0,0,0,0.65);
+    }
+    body.dark-theme .story-card,
+    body.dark-theme .partner-card,
+    body.dark-theme .testi-card {
+      background: #1e1e2a;
+      border-color: #3a3a4a;
+    }
+    body.dark-theme .contact-form input,
+    body.dark-theme .contact-form textarea,
+    body.dark-theme .contact-form select {
+      background: #1e1e2a;
+      color: #f0f0f0;
+      border-color: #3a3a4a;
+    }
+
+    /* --- NAV --- */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 70px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo-img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      display: block;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      background: transparent;
+    }
+    .nav-logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--text-dark);
+      letter-spacing: -0.3px;
+    }
+    .nav-logo-text span { color: var(--orange); }
+    
+    .nav-links-btn {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .nav-links-btn:hover { background: var(--orange-dark); }
+    .nav-links-btn i { font-size: 16px; }
+
+    .nav-dropdown {
+      position: absolute;
+      top: 70px;
+      right: 40px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 0;
+      min-width: 200px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 200;
+    }
+    .nav-dropdown.open { display: flex; }
+    .nav-dropdown a {
+      padding: 10px 24px;
+      text-decoration: none;
+      color: var(--text-mid);
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-dropdown a:hover {
+      background: var(--bg-light);
+      color: var(--orange);
+    }
+    body.dark-theme .nav-dropdown {
+      background: #1e1e2a;
+      border-color: #3a3a4a;
+    }
+    body.dark-theme .nav-dropdown a:hover {
+      background: #2a2a3a;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; position: relative; }
+    .theme-toggle {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-mid);
+      padding: 6px 10px;
+      border-radius: 30px;
+      transition: background 0.2s;
+    }
+    .theme-toggle:hover { background: rgba(0,0,0,0.05); }
+    .nav-toggle { display: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; height: 64px; }
+      .nav-logo-img { width: 48px; height: 48px; }
+      .nav-logo-text { font-size: 16px; }
+      .nav-links-btn { padding: 6px 16px; font-size: 13px; }
+      .nav-dropdown { right: 20px; min-width: 180px; top: 64px; }
+      .nav-right { gap: 6px; }
+    }
+
+    /* --- HERO --- */
+    .hero-stories {
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      padding: 60px 60px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+      margin-bottom: var(--section-gap);
+    }
+    .hero-stories::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://i.pinimg.com/736x/78/f0/75/78f075209634045f95a38738cf07766f.jpg') center/cover no-repeat;
+      opacity: 0.25;
+      z-index: 1;
+    }
+    .hero-stories::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--hero-overlay);
+      z-index: 2;
+    }
+    .hero-stories .hero-content {
+      max-width: 700px;
+      position: relative;
+      z-index: 3;
+    }
+    .hero-stories .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .hero-stories .hero-content h1 span { color: var(--orange-light); }
+    .hero-stories .hero-content p {
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    /* --- STORIES SECTION --- */
+    .stories-section {
+      background: var(--bg-white);
+      padding: 70px 60px;
+      margin-bottom: var(--section-gap);
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .section-title h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .section-title p {
+      color: var(--text-light);
+      font-size: 15px;
+    }
+    .title-bar {
+      width: 50px;
+      height: 3px;
+      background: var(--orange);
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .story-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px 28px;
+      text-align: center;
+      transition: 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .story-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+      border-color: var(--orange);
+    }
+    .story-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 16px;
+      border: 3px solid var(--orange);
+      background: var(--bg-light);
+    }
+    .story-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .story-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .story-card .story-role {
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .story-card .story-location {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .story-card .story-location i {
+      margin-right: 4px;
+    }
+    .story-card .story-quote {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text-mid);
+      font-style: italic;
+      position: relative;
+      padding: 0 4px;
+    }
+    .story-card .story-quote::before {
+      content: '"';
+      font-size: 28px;
+      color: var(--orange);
+      font-style: normal;
+      opacity: 0.5;
+      margin-right: 4px;
+    }
+    .story-card .story-quote::after {
+      content: '"';
+      font-size: 28px;
+      color: var(--orange);
+      font-style: normal;
+      opacity: 0.5;
+      margin-left: 4px;
+    }
+    .story-card .story-stars {
+      color: #f5a623;
+      font-size: 16px;
+      letter-spacing: 2px;
+      margin-top: 10px;
+    }
+
+    /* --- STATS BANNER --- */
+    .stats-banner {
+      background: var(--bg-light);
+      padding: 50px 60px;
+      margin-bottom: var(--section-gap);
+    }
+    .stats-banner-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .stats-banner-inner .stat-item .stat-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--orange);
+    }
+    .stats-banner-inner .stat-item .stat-label {
+      font-size: 14px;
+      color: var(--text-mid);
+      margin-top: 4px;
+    }
+
+    /* --- CTA BAND --- */
+    .cta-band {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 70px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: var(--section-gap);
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(212,112,58,0.2) 0%, transparent 60%);
+    }
+    .cta-band h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .cta-band p {
+      color: rgba(255,255,255,0.72);
+      font-size: 15px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      position: relative;
+    }
+    .btn-primary:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background: #1a1a2e; color: rgba(255,255,255,0.7);
+      padding: 50px 60px 30px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand h3 { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; line-height: 1.8; margin-bottom: 16px; }
+    .footer-col h4 { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 14px; letter-spacing: 1px; text-transform: uppercase; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--orange-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; }
+    .footer-bottom span { color: rgba(255,255,255,0.5); }
+    .whatsapp-float {
+      position: fixed; bottom: 30px; right: 30px; background: #25D366; width: 56px; height: 56px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 99; text-decoration: none;
+    }
+
+    @media (max-width: 992px) {
+      .stories-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .hero-stories { padding: 50px 24px; }
+      .hero-stories .hero-content h1 { font-size: 28px; }
+      .stories-section { padding: 50px 24px; }
+      .stories-grid { grid-template-columns: 1fr; }
+      .stats-banner { padding: 40px 24px; }
+      .stats-banner-inner { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .cta-band { padding: 50px 24px; }
+      .cta-band h2 { font-size: 26px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .stats-banner-inner { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/254721473081?text=Hello%20CHEPS%20Consultancy!%20I%20want%20to%20share%20my%20story." class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="https://i.pinimg.com/1200x/98/a9/c1/98a9c157f35ce774a6a0d742b7b3df2c.jpg"
+         alt="CHEP'S Consultancy Logo"
+         class="nav-logo-img">
+    <span class="nav-logo-text">CHEP'S<span>Consultancy</span></span>
+  </a>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><i class="fas fa-moon"></i></button>
+    <button class="nav-links-btn" id="navLinksBtn"><i class="fas fa-bars"></i> Menu</button>
+    <div class="nav-dropdown" id="navDropdown">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="countries.html">Countries</a>
+      <a href="process.html">Process</a>
+      <a href="stories.html">Stories</a>
+      <a href="blog.html">Blog</a>
+      <a href="faq.html">FAQ</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="partners.html">Partners</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-stories" id="stories-hero">
+  <div class="hero-content">
+    <h1>Success <span>Stories</span></h1>
+    <p>Real stories from real people who transformed their lives with our help. Read about their journeys and get inspired to start your own.</p>
+  </div>
+</section>
+
+<!-- STORIES GRID -->
+<section class="stories-section" id="stories">
+  <div class="section-title">
+    <h2>Client Testimonials</h2>
+    <div class="title-bar"></div>
+    <p>Hear from professionals who successfully launched their international careers</p>
+  </div>
+
+  <div class="stories-grid">
+    <!-- Story 1 -->
+    <div class="story-card">
+      <div class="story-avatar">
+        <img src="https://i.pinimg.com/736x/c9/49/9e/c9499e78cc0149ac7cfa68deb1b28bde.jpg" alt="Sarah Mitchell">
+      </div>
+      <h3>Sarah Mitchell</h3>
+      <span class="story-role">Software Engineer</span>
+      <span class="story-location"><i class="fas fa-map-marker-alt"></i> Amsterdam, Netherlands</span>
+      <div class="story-quote">CHEPS made my move to Amsterdam seamless. From finding the right role to visa support, they were incredible every step of the way.</div>
+      <div class="story-stars">★★★★★</div>
+    </div>
+
+    <!-- Story 2 -->
+    <div class="story-card">
+      <div class="story-avatar">
+        <img src="https://i.pinimg.com/1200x/92/89/22/9289225db184864fd115b527070024bb.jpg" alt="Dr. Ahmed Rahman">
+      </div>
+      <h3>Dr. Ahmed Rahman</h3>
+      <span class="story-role">Healthcare Professional</span>
+      <span class="story-location"><i class="fas fa-map-marker-alt"></i> Dubai, UAE</span>
+      <div class="story-quote">Moving to Dubai was a big step, but CHEPS made it feel easy. They handled everything professionally and found me the perfect role.</div>
+      <div class="story-stars">★★★★★</div>
+    </div>
+
+    <!-- Story 3 -->
+    <div class="story-card">
+      <div class="story-avatar">
+        <img src="https://i.pinimg.com/736x/50/45/75/5045750d1b887e0666872ba2c3a990e8.jpg" alt="James O'Connor">
+      </div>
+      <h3>James O'Connor</h3>
+      <span class="story-role">Project Manager</span>
+      <span class="story-location"><i class="fas fa-map-marker-alt"></i> Auckland, New Zealand</span>
+      <div class="story-quote">The career coaching and interview preparation I received was invaluable. I landed a senior role in New Zealand within weeks.</div>
+      <div class="story-stars">★★★★★</div>
+    </div>
+
+    <!-- Story 4 -->
+    <div class="story-card">
+      <div class="story-avatar">
+        <img src="https://i.pinimg.com/1200x/1d/68/bc/1d68bc686825557d707810aea59c0796.jpg" alt="Maria Wanjiku">
+      </div>
+      <h3>Maria wanjiku</h3>
+      <span class="story-role">Hospitality worker</span>
+      <span class="story-location"><i class="fas fa-map-marker-alt"></i> Lisbon, Portugal</span>
+      <div class="story-quote">I never thought I could work abroad. CHEP'S guided me through everything and now I'm living my dream in Portugal. Thank you!</div>
+      <div class="story-stars">★★★★★</div>
+    </div>
+
+    <!-- Story 5 -->
+    <div class="story-card">
+      <div class="story-avatar">
+        <img src="https://i.pinimg.com/736x/ae/80/c2/ae80c2b7db075a1269181babfe55b0ef.jpg" alt="David Kim">
+      </div>
+      <h3>David Kim</h3>
+      <span class="story-role">Logistics worker</span>
+      <span class="story-location"><i class="fas fa-map-marker-alt"></i> Dublin, Ireland</span>
+      <div class="story-quote">The team at CHEP'S is amazing. They found me a great job and supported me through the visa process. Highly recommended!</div>
+      <div class="story-stars">★★★★★</div>
+    </div>
+
+    <!-- Story 6 -->
+    <div class="story-card">
+      <div class="story-avatar">
+        <img src="https://i.pinimg.com/736x/68/bd/70/68bd702627f38315f73639c589c35a59.jpg" alt="Fatima Al-Hassan">
+      </div>
+      <h3>Fatim Al-Hassan</h3>
+      <span class="story-role">Construction </span>
+      <span class="story-location"><i class="fas fa-map-marker-alt"></i> Doha, Qatar</span>
+      <div class="story-quote">CHEPS helped me secure a great position in Qatar. Their support made the transition smooth and stress-free.</div>
+      <div class="story-stars">★★★★★</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BANNER -->
+<section class="stats-banner">
+  <div class="stats-banner-inner">
+    <div class="stat-item">
+      <div class="stat-number">200+</div>
+      <div class="stat-label"> Placed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">12+</div>
+      <div class="stat-label">Countries</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">98%</div>
+      <div class="stat-label">Visa Success Rate</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">4.9★</div>
+      <div class="stat-label">Client Satisfaction</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <h2>Ready to Write Your Own Story?</h2>
+  <p>Join hundreds of professionals who have successfully launched their international careers with CHEP'S.</p>
+  <a href="contact.html" class="btn-primary"><i class="fas fa-paper-plane"></i> Start Your Journey</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>CHEP'S<span style="color:var(--orange);">Consultancy</span></h3>
+      <p>Building futures beyond borders. Trusted by professionals in 10 countries worldwide.</p>
+      <p><strong>Vision:</strong> To be the leading global mobility and overseas employment consultancy.</p>
+      <p><strong>Mission:</strong> To connect skilled individuals with reputable international employers while providing expert guidance and seamless relocation solutions.</p>
+      <div style="display:flex; gap:12px; margin-top:16px;">
+        <a href="#" style="color:white;"><i class="fab fa-linkedin"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-facebook"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-youtube"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="stories.html">Success Stories</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">Job Placement</a></li>
+        <li><a href="services.html">Visa Assistance</a></li>
+        <li><a href="services.html">Document Processing</a></li>
+        <li><a href="services.html">Relocation Support</a></li>
+        <li><a href="services.html">Career Guidance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="countries.html">Netherlands</a></li>
+        <li><a href="countries.html">Dubai</a></li>
+        <li><a href="countries.html">New Zealand</a></li>
+        <li><a href="countries.html">Ireland</a></li>
+        <li><a href="countries.html">Qatar</a></li>
+        <li><a href="countries.html">Portugal</a></li>
+        <li><a href="countries.html">Serbia</a></li>
+        <li><a href="countries.html">Slovakia</a></li>
+        <li><a href="countries.html">Kuwait</a></li>
+        <li><a href="countries.html">Saudi Arabia</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 CHEP'S Consultancy — Building Futures Beyond Borders. Developed by Quantum Solutions</span>
+    <span>🌍 Global Career Solutions</span>
+  </div>
+</footer>
+
+<script>
+  // Dropdown toggle
+  const navLinksBtn = document.getElementById('navLinksBtn');
+  const navDropdown = document.getElementById('navDropdown');
+
+  if (navLinksBtn && navDropdown) {
+    navLinksBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      navDropdown.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!navDropdown.contains(e.target) && e.target !== navLinksBtn) {
+        navDropdown.classList.remove('open');
+      }
+    });
+    navDropdown.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function() {
+        navDropdown.classList.remove('open');
+      });
+    });
+  }
+
+  // Dark theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-theme');
+      const icon = this.querySelector('i');
+      if (icon) {
+        if (document.body.classList.contains('dark-theme')) {
+          icon.classList.remove('fa-moon');
+          icon.classList.add('fa-sun');
+        } else {
+          icon.classList.remove('fa-sun');
+          icon.classList.add('fa-moon');
+        }
+      }
+    });
+  }
+</script>
+</body>
+</html>

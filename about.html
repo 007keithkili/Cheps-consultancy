@@ -303,33 +303,97 @@
       margin-top: 4px;
     }
 
-    /* --- ABOUT STRIP (from index) --- */
+    /* --- ABOUT STRIP (fixed: two images left, text right) --- */
     .about-strip {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0; background: var(--bg-white);
+      display: grid; 
+      grid-template-columns: 1fr 1fr;
+      gap: 0; 
+      background: var(--bg-white);
       margin-bottom: var(--section-gap);
+      align-items: stretch;
     }
-    .about-img { position: relative; min-height: 340px; overflow: hidden; }
+    .about-img { 
+      position: relative; 
+      min-height: 340px; 
+      overflow: hidden; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .about-img-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4px; height: 100%;
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 4px; 
+      width: 100%;
+      height: 100%;
     }
-    .about-img-grid div { background: #ddd; overflow: hidden; }
-    .about-img-grid div img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .about-img-grid div { 
+      background: #ddd; 
+      overflow: hidden; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-img-grid div img { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      display: block; 
+    }
     .img-placeholder {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center; overflow: hidden;
+      width: 100%; 
+      height: 100%;
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      overflow: hidden;
     }
-    .img-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .img-placeholder img { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      display: block; 
+    }
     .ip1 { background: #0f3460; }
     .ip2 { background: #1a4a7a; }
-    .ip3 { background: #c0601a; }
-    .ip4 { background: #e8945a; }
 
-    .about-text { padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; }
-    .section-eyebrow { color: var(--orange); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-    .about-text h2 { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 16px; line-height: 1.3; }
-    .about-text p { color: var(--text-mid); font-size: 14.5px; line-height: 1.8; margin-bottom: 18px; }
-    .btn-link { color: var(--orange); font-size: 14px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+    .about-text { 
+      padding: 60px 50px; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      background: var(--bg-white);
+    }
+    .section-eyebrow { 
+      color: var(--orange); 
+      font-size: 12px; 
+      font-weight: 700; 
+      letter-spacing: 2px; 
+      text-transform: uppercase; 
+      margin-bottom: 10px; 
+    }
+    .about-text h2 { 
+      font-family: 'Montserrat', sans-serif; 
+      font-size: 28px; 
+      font-weight: 800; 
+      margin-bottom: 16px; 
+      line-height: 1.3; 
+    }
+    .about-text p { 
+      color: var(--text-mid); 
+      font-size: 14.5px; 
+      line-height: 1.8; 
+      margin-bottom: 18px; 
+    }
+    .btn-link { 
+      color: var(--orange); 
+      font-size: 14px; 
+      font-weight: 700; 
+      text-decoration: none; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 6px; 
+    }
     .btn-link:hover { text-decoration: underline; }
 
     /* VALUES */
@@ -473,13 +537,13 @@
   </div>
 </section>
 
-<!-- ABOUT STRIP (from index) -->
+<!-- ABOUT STRIP (fixed: two images left, text right) -->
 <div class="about-strip" id="about-more">
   <div class="about-img">
     <div class="about-img-grid">
       <div><div class="img-placeholder ip1"><img src="https://i.pinimg.com/736x/81/93/4a/81934a47d05abf9cd132205860d38d0a.jpg" alt="team"></div></div>
       <div><div class="img-placeholder ip2"><img src="https://i.pinimg.com/736x/b2/cb/d4/b2cbd44e4efaa0a7972950b4cf52c175.jpg" alt="career"></div></div>
-      
+    </div>
   </div>
   <div class="about-text">
     <div class="section-eyebrow">Our story</div>

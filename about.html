@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>About Us — CHEP'S Consultancy</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* --- RESET & BASE (exact copy from index) --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #d4703a;
+      --orange-dark: #b85c28;
+      --orange-light: #e8945a;
+      --bg-light: #f9f5f1;
+      --bg-white: #ffffff;
+      --text-dark: #1a1a1a;
+      --text-mid: #444444;
+      --text-light: #777777;
+      --border: #e5e0da;
+      --nav-bg: #ffffff;
+      --hero-overlay: rgba(0,0,0,0.45);
+      --section-gap: 20px;
+    }
+    body { 
+      font-family: 'Open Sans', sans-serif; 
+      color: var(--text-dark); 
+      background: var(--bg-white); 
+      overflow-x: hidden; 
+      width: 100%; 
+      transition: background 0.2s, color 0.2s;
+    }
+    body.dark-theme {
+      --bg-light: #1e1e2a;
+      --bg-white: #15151e;
+      --text-dark: #f0f0f0;
+      --text-mid: #c0c0c0;
+      --text-light: #a0a0a0;
+      --border: #3a3a4a;
+      --nav-bg: #1a1a24;
+      --hero-overlay: rgba(0,0,0,0.65);
+    }
+    body.dark-theme .service-card,
+    body.dark-theme .partner-card,
+    body.dark-theme .testi-card {
+      background: #1e1e2a;
+      border-color: #3a3a4a;
+    }
+    body.dark-theme .contact-form input,
+    body.dark-theme .contact-form textarea,
+    body.dark-theme .contact-form select {
+      background: #1e1e2a;
+      color: #f0f0f0;
+      border-color: #3a3a4a;
+    }
+
+    /* --- NAV (only one button: Menu) --- */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 70px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo-img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      display: block;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      background: transparent;
+    }
+    .nav-logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--text-dark);
+      letter-spacing: -0.3px;
+    }
+    .nav-logo-text span { color: var(--orange); }
+    
+    /* single Menu button */
+    .nav-links-btn {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .nav-links-btn:hover { background: var(--orange-dark); }
+    .nav-links-btn i { font-size: 16px; }
+
+    .nav-dropdown {
+      position: absolute;
+      top: 70px;
+      right: 40px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 0;
+      min-width: 200px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 200;
+    }
+    .nav-dropdown.open { display: flex; }
+    .nav-dropdown a {
+      padding: 10px 24px;
+      text-decoration: none;
+      color: var(--text-mid);
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-dropdown a:hover {
+      background: var(--bg-light);
+      color: var(--orange);
+    }
+    body.dark-theme .nav-dropdown {
+      background: #1e1e2a;
+      border-color: #3a3a4a;
+    }
+    body.dark-theme .nav-dropdown a:hover {
+      background: #2a2a3a;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; position: relative; }
+    .theme-toggle {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-mid);
+      padding: 6px 10px;
+      border-radius: 30px;
+      transition: background 0.2s;
+    }
+    .theme-toggle:hover { background: rgba(0,0,0,0.05); }
+    /* remove nav-toggle (hidden) — only one button */
+    .nav-toggle { display: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; height: 64px; }
+      .nav-logo-img { width: 48px; height: 48px; }
+      .nav-logo-text { font-size: 16px; }
+      .nav-links-btn { padding: 6px 16px; font-size: 13px; }
+      .nav-dropdown { right: 20px; min-width: 180px; top: 64px; }
+      .nav-right { gap: 6px; }
+    }
+
+    /* --- HERO (about version) --- */
+    .hero-about {
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      padding: 60px 60px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+      margin-bottom: var(--section-gap);
+    }
+    .hero-about::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      opacity: 0.25;
+      z-index: 1;
+    }
+    .hero-about::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--hero-overlay);
+      z-index: 2;
+    }
+    .hero-about .hero-content {
+      max-width: 700px;
+      position: relative;
+      z-index: 3;
+    }
+    .hero-about .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 40px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .hero-about .hero-content h1 span { color: var(--orange-light); }
+    .hero-about .hero-content p {
+      color: rgba(255,255,255,0.8);
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    /* --- CREATIVE INDIVIDUAL IMAGE SECTION (different from home) --- */
+    .about-individual {
+      background: var(--bg-white);
+      padding: 70px 60px;
+      margin-bottom: var(--section-gap);
+    }
+    .individual-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    /* image on the right, with a creative frame & overlay */
+    .individual-image {
+      position: relative;
+      border-radius: 20px 20px 20px 0;
+      overflow: hidden;
+      box-shadow: -20px 20px 0 var(--orange-light), 0 20px 40px rgba(0,0,0,0.15);
+      background: #ddd;
+      transition: 0.3s ease;
+    }
+    .individual-image:hover {
+      box-shadow: -20px 20px 0 var(--orange), 0 25px 50px rgba(0,0,0,0.2);
+      transform: scale(1.01);
+    }
+    .individual-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      min-height: 380px;
+      transition: transform 0.4s ease;
+    }
+    .individual-image:hover img { transform: scale(1.03); }
+    /* decorative badge */
+    .individual-image::after {
+      content: '✦ CHEP\'S';
+      position: absolute;
+      bottom: 20px;
+      right: -8px;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 8px 18px;
+      border-radius: 30px 0 30px 30px;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .individual-text .section-eyebrow {
+      color: var(--orange);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .individual-text h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      line-height: 1.2;
+    }
+    .individual-text h2 span { color: var(--orange); }
+    .individual-text p {
+      color: var(--text-mid);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+    .individual-signature {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--orange-dark);
+      margin-top: 8px;
+      padding-left: 12px;
+      border-left: 4px solid var(--orange);
+    }
+    .individual-signature small {
+      font-weight: 400;
+      color: var(--text-light);
+      font-size: 13px;
+      display: block;
+      margin-top: 4px;
+    }
+
+    /* --- ABOUT STRIP (from index) --- */
+    .about-strip {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; background: var(--bg-white);
+      margin-bottom: var(--section-gap);
+    }
+    .about-img { position: relative; min-height: 340px; overflow: hidden; }
+    .about-img-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px; height: 100%;
+    }
+    .about-img-grid div { background: #ddd; overflow: hidden; }
+    .about-img-grid div img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .img-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .img-placeholder img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ip1 { background: #0f3460; }
+    .ip2 { background: #1a4a7a; }
+    .ip3 { background: #c0601a; }
+    .ip4 { background: #e8945a; }
+
+    .about-text { padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; }
+    .section-eyebrow { color: var(--orange); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+    .about-text h2 { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 16px; line-height: 1.3; }
+    .about-text p { color: var(--text-mid); font-size: 14.5px; line-height: 1.8; margin-bottom: 18px; }
+    .btn-link { color: var(--orange); font-size: 14px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-link:hover { text-decoration: underline; }
+
+    /* VALUES */
+    .values-section {
+      background: var(--bg-light);
+      padding: 70px 60px;
+      margin-bottom: var(--section-gap);
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      max-width: 1100px;
+      margin: 30px auto 0;
+    }
+    .value-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: 0.3s ease;
+    }
+    .value-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.06); }
+    .value-card i {
+      font-size: 38px;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+    .value-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .value-card p {
+      color: var(--text-mid);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* FOOTER (exact) */
+    footer {
+      background: #1a1a2e; color: rgba(255,255,255,0.7);
+      padding: 50px 60px 30px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand h3 { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; line-height: 1.8; margin-bottom: 16px; }
+    .footer-col h4 { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 14px; letter-spacing: 1px; text-transform: uppercase; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--orange-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; }
+    .footer-bottom span { color: rgba(255,255,255,0.5); }
+    .whatsapp-float {
+      position: fixed; bottom: 30px; right: 30px; background: #25D366; width: 56px; height: 56px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 99; text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .hero-about { padding: 50px 24px; }
+      .hero-about .hero-content h1 { font-size: 28px; }
+      .about-strip { grid-template-columns: 1fr; }
+      .about-text { padding: 40px 24px; }
+      .individual-wrap { grid-template-columns: 1fr; gap: 30px; }
+      .individual-image img { min-height: 280px; }
+      .individual-image { box-shadow: -10px 10px 0 var(--orange-light); }
+      .about-individual { padding: 50px 24px; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .values-section { padding: 50px 24px; }
+    }
+    @media (max-width: 480px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .individual-image::after { font-size: 11px; padding: 6px 14px; bottom: 12px; right: -4px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/254721473081?text=Hello%20CHEPS%20Consultancy!%20I'm%20interested%20in%20global%20career%20opportunities." class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- NAV (only Menu button, no toggle) -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="https://i.pinimg.com/1200x/98/a9/c1/98a9c157f35ce774a6a0d742b7b3df2c.jpg"
+         alt="CHEP'S Consultancy Logo"
+         class="nav-logo-img">
+    <span class="nav-logo-text">CHEP'S<span>Consultancy</span></span>
+  </a>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><i class="fas fa-moon"></i></button>
+    <button class="nav-links-btn" id="navLinksBtn"><i class="fas fa-bars"></i> Menu</button>
+    <!-- nav-toggle removed -->
+    <div class="nav-dropdown" id="navDropdown">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="countries.html">Countries</a>
+      <a href="process.html">Process</a>
+      <a href="stories.html">Stories</a>
+      <a href="blog.html">Blog</a>
+      <a href="faq.html">FAQ</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="partners.html">Partners</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO (about) -->
+<section class="hero-about" id="about-hero">
+  <div class="hero-content">
+    <h1>About <span>CHEP'S Consultancy</span></h1>
+    <p>Transforming lives through international career opportunities since 2019. We are a professional overseas employment and relocation consultancy dedicated to helping individuals secure global jobs and successfully transition to life abroad.</p>
+  </div>
+</section>
+
+<!-- CREATIVE INDIVIDUAL IMAGE SECTION (different from home) -->
+<section class="about-individual" id="individual">
+  <div class="individual-wrap">
+    <div class="individual-text">
+      <div class="section-eyebrow">Meet the agency</div>
+      <h2>Your trusted <span>career partner</span> worldwide</h2>
+      <p><strong>CHEP'S Consultancy</strong> is more than a recruitment agency — we are your strategic partner in building a global career. Our founder, with over 15 years in international HR and migration, leads a dedicated team that has placed 200+ professionals across 12+ countries.</p>
+      <p>We combine local insight with global networks, offering end-to-end support: from job matching and interview coaching to visa processing and relocation. Our success is measured by the success of every professional we guide.</p>
+      <div class="individual-signature">
+        <i class="fas fa-quote-left" style="color:var(--orange);margin-right:6px;"></i> Empowering talent to cross borders with confidence.
+        <small>— CHEP'S Consultancy Team</small>
+      </div>
+    </div>
+    <div class="individual-image">
+      <img src="https://i.pinimg.com/736x/83/b3/69/83b36988547b4e469c51b1bd72244a81.jpg" alt="CHEP'S Consultancy Founder & CEO">
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT STRIP (from index) -->
+<div class="about-strip" id="about-more">
+  <div class="about-img">
+    <div class="about-img-grid">
+      <div><div class="img-placeholder ip1"><img src="https://i.pinimg.com/736x/81/93/4a/81934a47d05abf9cd132205860d38d0a.jpg" alt="team"></div></div>
+      <div><div class="img-placeholder ip2"><img src="https://i.pinimg.com/736x/b2/cb/d4/b2cbd44e4efaa0a7972950b4cf52c175.jpg" alt="career"></div></div>
+      
+  </div>
+  <div class="about-text">
+    <div class="section-eyebrow">Our story</div>
+    <h2>Transforming Lives Through International Career Opportunities</h2>
+    <p><strong>CHEP'S Consultancy</strong> is a professional overseas employment and relocation consultancy dedicated to helping individuals secure international job opportunities and successfully transition to life abroad. We provide guidance throughout the entire process, from job sourcing and application support to visa processing and relocation assistance.</p>
+    <p><strong>Our Vision:</strong> To be the leading global mobility and overseas employment consultancy, transforming lives through international career opportunities and successful relocation services.</p>
+    <p><strong>Our Mission:</strong> To connect skilled individuals with reputable international employers while providing expert guidance, reliable support, and seamless relocation solutions that empower clients to build successful futures abroad.</p>
+    <a href="index.html#services" class="btn-link">+ Discover Our Services →</a>
+  </div>
+</div>
+
+<!-- VALUES -->
+<section class="values-section" id="values">
+  <div style="text-align:center; max-width:700px; margin:0 auto;">
+    <div class="section-eyebrow">Core values</div>
+    <h2 style="font-family:'Montserrat',sans-serif; font-size:30px; font-weight:800; margin-bottom:10px;">What drives us</h2>
+    <div class="title-bar" style="width:50px; height:3px; background:var(--orange); margin:10px auto 0; border-radius:2px;"></div>
+  </div>
+  <div class="values-grid">
+    <div class="value-card"><i class="fas fa-handshake"></i><h3>Integrity</h3><p>We operate with transparency, honesty, and ethical practices in every client engagement.</p></div>
+    <div class="value-card"><i class="fas fa-users"></i><h3>Client-Centric</h3><p>Your career goals are our priority. We tailor our approach to your unique aspirations.</p></div>
+    <div class="value-card"><i class="fas fa-globe"></i><h3>Global Reach</h3><p>We leverage a vast network of employers and partners across 12+ countries.</p></div>
+    <div class="value-card"><i class="fas fa-chart-line"></i><h3>Excellence</h3><p>We strive for the highest standards in recruitment, visa processing, and support.</p></div>
+    <div class="value-card"><i class="fas fa-heart"></i><h3>Empathy</h3><p>We understand the challenges of relocation and support you with care and dedication.</p></div>
+    <div class="value-card"><i class="fas fa-award"></i><h3>Results</h3><p>Our 98% visa success rate and 200+ placements speak to our commitment to outcomes.</p></div>
+  </div>
+</section>
+
+<!-- FOOTER (exact) -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>CHEP'S<span style="color:var(--orange);">Consultancy</span></h3>
+      <p>Building futures beyond borders. Trusted by professionals in 12+ countries worldwide.</p>
+      <p><strong>Vision:</strong> To be the leading global mobility and overseas employment consultancy.</p>
+      <p><strong>Mission:</strong> To connect skilled individuals with reputable international employers while providing expert guidance and seamless relocation solutions.</p>
+      <div style="display:flex; gap:12px; margin-top:16px;">
+        <a href="#" style="color:white;"><i class="fab fa-linkedin"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-facebook"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-youtube"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="index.html#services">Our Services</a></li>
+        <li><a href="index.html#stories">Success Stories</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="index.html#services">Job Placement</a></li>
+        <li><a href="index.html#services">Visa Assistance</a></li>
+        <li><a href="index.html#services">Document Processing</a></li>
+        <li><a href="index.html#services">Relocation Support</a></li>
+        <li><a href="index.html#services">Career Guidance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="index.html#countries">Netherlands</a></li>
+        <li><a href="index.html#countries">Dubai</a></li>
+        <li><a href="index.html#countries">New Zealand</a></li>
+        <li><a href="index.html#countries">Ireland</a></li>
+        <li><a href="index.html#countries">Qatar</a></li>
+        <li><a href="index.html#countries">Portugal</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 CHEP'S Consultancy — Building Futures Beyond Borders. Developed by Quantum Solutions</span>
+    <span>🌍 Global Career Solutions</span>
+  </div>
+</footer>
+
+<script>
+  // Dropdown toggle (only Menu button)
+  const navLinksBtn = document.getElementById('navLinksBtn');
+  const navDropdown = document.getElementById('navDropdown');
+
+  if (navLinksBtn && navDropdown) {
+    navLinksBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      navDropdown.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!navDropdown.contains(e.target) && e.target !== navLinksBtn) {
+        navDropdown.classList.remove('open');
+      }
+    });
+    navDropdown.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function() {
+        navDropdown.classList.remove('open');
+      });
+    });
+  }
+
+  // Dark theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-theme');
+      const icon = this.querySelector('i');
+      if (icon) {
+        if (document.body.classList.contains('dark-theme')) {
+          icon.classList.remove('fa-moon');
+          icon.classList.add('fa-sun');
+        } else {
+          icon.classList.remove('fa-sun');
+          icon.classList.add('fa-moon');
+        }
+      }
+    });
+  }
+</script>
+</body>
+</html>

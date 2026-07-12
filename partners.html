@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Partners — CHEP'S Consultancy</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* --- RESET & BASE --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #d4703a;
+      --orange-dark: #b85c28;
+      --orange-light: #e8945a;
+      --bg-light: #f9f5f1;
+      --bg-white: #ffffff;
+      --text-dark: #1a1a1a;
+      --text-mid: #444444;
+      --text-light: #777777;
+      --border: #e5e0da;
+      --nav-bg: #ffffff;
+      --hero-overlay: rgba(0,0,0,0.45);
+      --section-gap: 20px;
+      --shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    body { 
+      font-family: 'Open Sans', sans-serif; 
+      color: var(--text-dark); 
+      background: var(--bg-white); 
+      overflow-x: hidden; 
+      width: 100%; 
+      transition: background 0.2s, color 0.2s;
+    }
+    body.dark-theme {
+      --bg-light: #1e1e2a;
+      --bg-white: #15151e;
+      --text-dark: #f0f0f0;
+      --text-mid: #c0c0c0;
+      --text-light: #a0a0a0;
+      --border: #3a3a4a;
+      --nav-bg: #1a1a24;
+      --hero-overlay: rgba(0,0,0,0.65);
+    }
+    body.dark-theme .partner-card,
+    body.dark-theme .testi-card {
+      background: #1e1e2a;
+      border-color: #3a3a4a;
+    }
+    body.dark-theme .contact-form input,
+    body.dark-theme .contact-form textarea,
+    body.dark-theme .contact-form select {
+      background: #1e1e2a;
+      color: #f0f0f0;
+      border-color: #3a3a4a;
+    }
+
+    /* --- NAV --- */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 70px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo-img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      display: block;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      background: transparent;
+    }
+    .nav-logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--text-dark);
+      letter-spacing: -0.3px;
+    }
+    .nav-logo-text span { color: var(--orange); }
+    
+    .nav-links-btn {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+    .nav-links-btn:hover { background: var(--orange-dark); }
+    .nav-links-btn i { font-size: 16px; }
+
+    .nav-dropdown {
+      position: absolute;
+      top: 70px;
+      right: 40px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 0;
+      min-width: 200px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 200;
+    }
+    .nav-dropdown.open { display: flex; }
+    .nav-dropdown a {
+      padding: 10px 24px;
+      text-decoration: none;
+      color: var(--text-mid);
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-dropdown a:hover {
+      background: var(--bg-light);
+      color: var(--orange);
+    }
+    body.dark-theme .nav-dropdown {
+      background: #1e1e2a;
+      border-color: #3a3a4a;
+    }
+    body.dark-theme .nav-dropdown a:hover {
+      background: #2a2a3a;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; position: relative; }
+    .theme-toggle {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-mid);
+      padding: 6px 10px;
+      border-radius: 30px;
+      transition: background 0.2s;
+    }
+    .theme-toggle:hover { background: rgba(0,0,0,0.05); }
+    .nav-toggle { display: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; height: 64px; }
+      .nav-logo-img { width: 48px; height: 48px; }
+      .nav-logo-text { font-size: 16px; }
+      .nav-links-btn { padding: 6px 16px; font-size: 13px; }
+      .nav-dropdown { right: 20px; min-width: 180px; top: 64px; }
+      .nav-right { gap: 6px; }
+    }
+
+    /* --- HERO --- */
+    .hero-partners {
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      padding: 60px 60px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+      margin-bottom: var(--section-gap);
+    }
+    .hero-partners::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://i.pinimg.com/1200x/9f/fe/17/9ffe17a2a166a8823525604b42f82fab.jpg') center/cover no-repeat;
+      opacity: 0.20;
+      z-index: 1;
+    }
+    .hero-partners::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--hero-overlay);
+      z-index: 2;
+    }
+    .hero-partners .hero-content {
+      max-width: 700px;
+      position: relative;
+      z-index: 3;
+    }
+    .hero-partners .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .hero-partners .hero-content h1 span { color: var(--orange-light); }
+    .hero-partners .hero-content p {
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    /* --- PARTNERS SECTION --- */
+    .partners-section {
+      background: var(--bg-white);
+      padding: 70px 60px;
+      margin-bottom: var(--section-gap);
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .section-title h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .section-title p {
+      color: var(--text-light);
+      font-size: 15px;
+    }
+    .title-bar {
+      width: 50px;
+      height: 3px;
+      background: var(--orange);
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    /* --- PARTNERS GRID --- */
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .partner-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 24px 28px;
+      text-align: center;
+      transition: 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .partner-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+      border-color: var(--orange);
+    }
+    .partner-card .partner-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 36px;
+      color: var(--orange);
+      transition: 0.3s ease;
+    }
+    .partner-card:hover .partner-icon {
+      background: var(--orange);
+      color: #fff;
+    }
+    .partner-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .partner-card .partner-type {
+      font-size: 12px;
+      color: var(--orange);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .partner-card p {
+      color: var(--text-mid);
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+
+    /* --- PARTNER CATEGORIES (TABS) --- */
+    .partner-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .partner-tabs .tab-btn {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 8px 24px;
+      font-size: 13px;
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: 0.25s ease;
+      font-family: 'Open Sans', sans-serif;
+    }
+    .partner-tabs .tab-btn:hover {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+    }
+    .partner-tabs .tab-btn.active {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+    }
+    .partner-tabs .tab-btn i {
+      margin-right: 6px;
+    }
+
+    /* --- TESTIMONIAL STRIP --- */
+    .testimonial-strip {
+      background: var(--bg-light);
+      padding: 60px 60px;
+      margin-bottom: var(--section-gap);
+    }
+    .testimonial-strip-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .testimonial-strip-inner .quote-icon {
+      font-size: 40px;
+      color: var(--orange-light);
+      opacity: 0.4;
+      margin-bottom: 12px;
+    }
+    .testimonial-strip-inner blockquote {
+      font-size: 20px;
+      font-style: italic;
+      color: var(--text-dark);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .testimonial-strip-inner .quote-author {
+      font-weight: 600;
+      color: var(--orange);
+    }
+    .testimonial-strip-inner .quote-author span {
+      font-weight: 400;
+      color: var(--text-light);
+      font-size: 14px;
+    }
+
+    /* --- CTA BAND --- */
+    .cta-band {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 70px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: var(--section-gap);
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(212,112,58,0.2) 0%, transparent 60%);
+    }
+    .cta-band h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .cta-band p {
+      color: rgba(255,255,255,0.72);
+      font-size: 15px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      position: relative;
+    }
+    .btn-primary:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background: #1a1a2e; color: rgba(255,255,255,0.7);
+      padding: 50px 60px 30px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand h3 { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; line-height: 1.8; margin-bottom: 16px; }
+    .footer-col h4 { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 14px; letter-spacing: 1px; text-transform: uppercase; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--orange-light); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 22px; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; }
+    .footer-bottom span { color: rgba(255,255,255,0.5); }
+    .whatsapp-float {
+      position: fixed; bottom: 30px; right: 30px; background: #25D366; width: 56px; height: 56px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.2); z-index: 99; text-decoration: none;
+    }
+
+    @media (max-width: 992px) {
+      .partners-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .hero-partners { padding: 50px 24px; }
+      .hero-partners .hero-content h1 { font-size: 28px; }
+      .partners-section { padding: 50px 24px; }
+      .partners-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .testimonial-strip { padding: 40px 24px; }
+      .testimonial-strip-inner blockquote { font-size: 17px; }
+      .cta-band { padding: 50px 24px; }
+      .cta-band h2 { font-size: 26px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .partners-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
+      .partner-tabs .tab-btn { font-size: 12px; padding: 6px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/254721473081?text=Hello%20CHEPS%20Consultancy!%20I'm%20interested%20in%20partnerships." class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="https://i.pinimg.com/1200x/98/a9/c1/98a9c157f35ce774a6a0d742b7b3df2c.jpg"
+         alt="CHEP'S Consultancy Logo"
+         class="nav-logo-img">
+    <span class="nav-logo-text">CHEP'S<span>Consultancy</span></span>
+  </a>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><i class="fas fa-moon"></i></button>
+    <button class="nav-links-btn" id="navLinksBtn"><i class="fas fa-bars"></i> Menu</button>
+    <div class="nav-dropdown" id="navDropdown">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="countries.html">Countries</a>
+      <a href="process.html">Process</a>
+      <a href="stories.html">Stories</a>
+      <a href="blog.html">Blog</a>
+      <a href="faq.html">FAQ</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="partners.html">Partners</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-partners" id="partners-hero">
+  <div class="hero-content">
+    <h1>Our <span>Partners</span></h1>
+    <p>We collaborate with leading employers, recruitment agencies, and institutional partners worldwide to provide the best opportunities for our clients.</p>
+  </div>
+</section>
+
+<!-- PARTNERS SECTION -->
+<section class="partners-section" id="partners">
+  <div class="section-title">
+    <h2>Trusted Partners</h2>
+    <div class="title-bar"></div>
+    <p>Collaborating with organizations that share our commitment to excellence</p>
+  </div>
+
+  <!-- Partner Tabs -->
+  <div class="partner-tabs" id="partnerTabs">
+    <button class="tab-btn active" data-tab="all"><i class="fas fa-th-list"></i> All</button>
+    <button class="tab-btn" data-tab="employers"><i class="fas fa-building"></i> Employers</button>
+    <button class="tab-btn" data-tab="agencies"><i class="fas fa-handshake"></i> Agencies</button>
+    <button class="tab-btn" data-tab="institutional"><i class="fas fa-university"></i> Institutional</button>
+    <button class="tab-btn" data-tab="strategic"><i class="fas fa-globe-americas"></i> Strategic</button>
+  </div>
+
+  <!-- Partners Grid -->
+  <div class="partners-grid" id="partnersGrid">
+    <!-- Employer Partners -->
+    <div class="partner-card" data-tab="employers">
+      <div class="partner-icon"><i class="fas fa-building"></i></div>
+      <h3>Fortune 500 Companies</h3>
+      <span class="partner-type">Employer Partner</span>
+      <p>Leading global corporations across technology, healthcare, finance, and engineering sectors.</p>
+    </div>
+
+    <div class="partner-card" data-tab="employers">
+      <div class="partner-icon"><i class="fas fa-industry"></i></div>
+      <h3>Manufacturing Leaders</h3>
+      <span class="partner-type">Employer Partner</span>
+      <p>Top manufacturing and production companies in Netherlands, Slovakia, and Serbia.</p>
+    </div>
+
+    <div class="partner-card" data-tab="employers">
+      <div class="partner-icon"><i class="fas fa-hotel"></i></div>
+      <h3>Hospitality Groups</h3>
+      <span class="partner-type">Employer Partner</span>
+      <p>Premium hotel chains and tourism operators across Dubai, Qatar, and Ireland.</p>
+    </div>
+
+    <div class="partner-card" data-tab="employers">
+      <div class="partner-icon"><i class="fas fa-tractor"></i></div>
+      <h3>Agricultural Enterprises</h3>
+      <span class="partner-type">Employer Partner</span>
+      <p>Large-scale farming and food processing operations in New Zealand and Portugal.</p>
+    </div>
+
+    <!-- Agency Partners -->
+    <div class="partner-card" data-tab="agencies">
+      <div class="partner-icon"><i class="fas fa-handshake"></i></div>
+      <h3>Global Recruitment Network</h3>
+      <span class="partner-type">Agency Partner</span>
+      <p>Strategic partnerships with recruitment agencies across all 10 destination countries.</p>
+    </div>
+
+    <div class="partner-card" data-tab="agencies">
+      <div class="partner-icon"><i class="fas fa-users"></i></div>
+      <h3>Staffing Solutions</h3>
+      <span class="partner-type">Agency Partner</span>
+      <p>Specialized staffing agencies providing skilled and unskilled workers to international employers.</p>
+    </div>
+
+    <!-- Institutional Partners -->
+    <div class="partner-card" data-tab="institutional">
+      <div class="partner-icon"><i class="fas fa-university"></i></div>
+      <h3>Professional Bodies</h3>
+      <span class="partner-type">Institutional Partner</span>
+      <p>Accredited professional organizations and trade associations across multiple industries.</p>
+    </div>
+
+    <div class="partner-card" data-tab="institutional">
+      <div class="partner-icon"><i class="fas fa-graduation-cap"></i></div>
+      <h3>Educational Institutions</h3>
+      <span class="partner-type">Institutional Partner</span>
+      <p>Universities and training centers providing workforce development and certification programs.</p>
+    </div>
+
+    <!-- Strategic Partners -->
+    <div class="partner-card" data-tab="strategic">
+      <div class="partner-icon"><i class="fas fa-globe-americas"></i></div>
+      <h3>Government Agencies</h3>
+      <span class="partner-type">Strategic Partner</span>
+      <p>Collaboration with government bodies and trade promotion agencies in various countries.</p>
+    </div>
+
+    <div class="partner-card" data-tab="strategic">
+      <div class="partner-icon"><i class="fas fa-hand-holding-heart"></i></div>
+      <h3>NGOs & Foundations</h3>
+      <span class="partner-type">Strategic Partner</span>
+      <p>Non-profit organizations focused on workforce development and international mobility.</p>
+    </div>
+
+    <div class="partner-card" data-tab="strategic">
+      <div class="partner-icon"><i class="fas fa-chart-line"></i></div>
+      <h3>Industry Associations</h3>
+      <span class="partner-type">Strategic Partner</span>
+      <p>Trade and industry associations across construction, logistics, and hospitality sectors.</p>
+    </div>
+
+    <div class="partner-card" data-tab="employers">
+      <div class="partner-icon"><i class="fas fa-truck"></i></div>
+      <h3>Logistics & Transport</h3>
+      <span class="partner-type">Employer Partner</span>
+      <p>Leading warehousing, shipping, and transportation companies in Netherlands and UAE.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL STRIP -->
+<section class="testimonial-strip">
+  <div class="testimonial-strip-inner">
+    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+    <blockquote>
+      "Working with CHEP'S Consultancy has been a transformative experience. Their professionalism, dedication, and global network have helped us connect with exceptional talent from around the world."
+    </blockquote>
+    <div class="quote-author">
+      — Michael van der Berg <span>| HR Director, Global Logistics Group</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <h2>Become a Partner</h2>
+  <p>Interested in collaborating with us? We're always looking for reputable employers, agencies, and institutional partners.</p>
+  <a href="contact.html" class="btn-primary"><i class="fas fa-handshake"></i> Partner With Us</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>CHEP'S<span style="color:var(--orange);">Consultancy</span></h3>
+      <p>Building futures beyond borders. Trusted by professionals in 10 countries worldwide.</p>
+      <p><strong>Vision:</strong> To be the leading global mobility and overseas employment consultancy.</p>
+      <p><strong>Mission:</strong> To connect skilled individuals with reputable international employers while providing expert guidance and seamless relocation solutions.</p>
+      <div style="display:flex; gap:12px; margin-top:16px;">
+        <a href="#" style="color:white;"><i class="fab fa-linkedin"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-twitter"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-facebook"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-youtube"></i></a>
+        <a href="#" style="color:white;"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="stories.html">Success Stories</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">Job Placement</a></li>
+        <li><a href="services.html">Visa Assistance</a></li>
+        <li><a href="services.html">Document Processing</a></li>
+        <li><a href="services.html">Relocation Support</a></li>
+        <li><a href="services.html">Career Guidance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="countries.html">Netherlands</a></li>
+        <li><a href="countries.html">Dubai</a></li>
+        <li><a href="countries.html">New Zealand</a></li>
+        <li><a href="countries.html">Ireland</a></li>
+        <li><a href="countries.html">Qatar</a></li>
+        <li><a href="countries.html">Portugal</a></li>
+        <li><a href="countries.html">Serbia</a></li>
+        <li><a href="countries.html">Slovakia</a></li>
+        <li><a href="countries.html">Kuwait</a></li>
+        <li><a href="countries.html">Saudi Arabia</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 CHEP'S Consultancy — Building Futures Beyond Borders. Developed by Quantum Solutions</span>
+    <span>🌍 Global Career Solutions</span>
+  </div>
+</footer>
+
+<script>
+  // Dropdown toggle
+  const navLinksBtn = document.getElementById('navLinksBtn');
+  const navDropdown = document.getElementById('navDropdown');
+
+  if (navLinksBtn && navDropdown) {
+    navLinksBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      navDropdown.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!navDropdown.contains(e.target) && e.target !== navLinksBtn) {
+        navDropdown.classList.remove('open');
+      }
+    });
+    navDropdown.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function() {
+        navDropdown.classList.remove('open');
+      });
+    });
+  }
+
+  // Dark theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-theme');
+      const icon = this.querySelector('i');
+      if (icon) {
+        if (document.body.classList.contains('dark-theme')) {
+          icon.classList.remove('fa-moon');
+          icon.classList.add('fa-sun');
+        } else {
+          icon.classList.remove('fa-sun');
+          icon.classList.add('fa-moon');
+        }
+      }
+    });
+  }
+
+  // Partner Tabs functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const partnerCards = document.querySelectorAll('.partner-card');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Update active tab
+        tabBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        const tab = this.dataset.tab;
+
+        // Filter cards
+        partnerCards.forEach(card => {
+          const cardTab = card.dataset.tab;
+          if (tab === 'all' || cardTab === tab) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>
+</body>
+</html>
